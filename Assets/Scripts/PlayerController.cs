@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
 {
     public Transform camera;
     public float walkingSpeed = 10;
+    public float jumpingSpeed = 10;
+    public float groundDetectionDistance = 1f;
     private float rotation;
     private Rigidbody rb;
 
@@ -53,8 +55,19 @@ public class PlayerController : MonoBehaviour
 	    {
 	        rb.velocity += -cameraForward * walkingSpeed;
 	    }
+	    if (Input.GetKeyDown(KeyCode.Space) && IsOnGround())
+	    {
+	        rb.velocity += Vector3.up * jumpingSpeed;
+	    }
 
         transform.rotation = Quaternion.Euler(0, rotation, 0);
+    }
+
+    bool IsOnGround()
+    {
+        var hitMask = ~LayerMask.NameToLayer("Player"); // Ignore player
+        Debug.DrawRay(transform.position, Vector3.down * groundDetectionDistance, Color.green, 2f);
+        return Physics.Raycast(transform.position, Vector3.down, groundDetectionDistance, hitMask);
     }
 
 }

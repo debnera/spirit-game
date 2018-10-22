@@ -24,9 +24,9 @@ GameObject:
   - component: {fileID: 23353312544038848}
   - component: {fileID: 114527844799623276}
   - component: {fileID: 54500487255003020}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,6 +113,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 0}
   walkingSpeed: 10
+  jumpingSpeed: 10
+  groundDetectionDistance: 1.2
 --- !u!136 &136117586231244586
 CapsuleCollider:
   m_ObjectHideFlags: 1
