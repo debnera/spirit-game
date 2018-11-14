@@ -19,6 +19,8 @@ public class FootstepGenerator : MonoBehaviour
 
     private String filename = "foot.steps";
 
+    
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -41,6 +43,10 @@ public class FootstepGenerator : MonoBehaviour
 
     void OnApplicationQuit()
     {
+        if (footprints == null || footprints.Count == 0)
+        {
+            return;
+        }
         String name = GenerateFootstepFilename();
         SaveFootsteps(GlobalSettings.GetFootstepSavePath(), name);
     }
