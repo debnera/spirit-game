@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private float rotation;
     private Rigidbody rb;
 	public Vector3 rotationOffset;
+	public float movementForce = 1;
+	public float movementTorque = 1;
 	
 
 	// Use this for initialization
@@ -38,47 +40,52 @@ public class PlayerController : MonoBehaviour
 
 	    var cameraForward = Vector3.Scale(camera.forward, new Vector3(1, 0, 1)).normalized;
 	    var cameraRight = Vector3.Scale(camera.right, new Vector3(1, 0, 1)).normalized;
+		
+		var movementVector = new Vector3();
 
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
 	    {
 	        //rb.AddForce(Vector3.forward * walkingSpeed);
 	        //rb.velocity += cameraForward * walkingSpeed;
-            rb.AddForce(cameraForward * walkingSpeed, ForceMode.VelocityChange);
+		    movementVector = cameraForward * walkingSpeed;
 
 	    }
 		
 		
-		var movementVector = new Vector3();
+		
 		
 	    if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 	    {
-	        movementVector = -cameraRight * walkingSpeed;
+	        movementVector += -cameraRight * walkingSpeed;
 	    }
 	    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 	    {
-	        movementVector = cameraRight * walkingSpeed;
+	        movementVector += cameraRight * walkingSpeed;
 	    }
 	    if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
 	    {
-	        movementVector = -cameraForward * walkingSpeed;
+	        movementVector += -cameraForward * walkingSpeed;
 	    }
 	    if (Input.GetKeyDown(KeyCode.Space) && IsOnGround())
 	    {
-	        movementVector = Vector3.up * jumpingSpeed;
+	        movementVector += Vector3.up * jumpingSpeed;
 	    }
 
 		if (WalkingMode)
 		{
 			rb.velocity += movementVector;
 			var cameraRot = camera.transform.eulerAngles;
-			Debug.Log(cameraRot);
 			var newRot = new Vector3(0, cameraRot.y, 0);
 			transform.rotation = Quaternion.Euler(newRot + rotationOffset);
 		}
 		else
 		{
-			rb.AddForce(movementVector);
-			rb.AddTorque(movementVector);
+			rb.AddForce(movementVector * Time.fixedDeltaTime * movementForce);
+			rb.AddTorque(movementVector * Time.fixedDeltaTime * movementTorque);
+			var cameraRot = camera.transform.eulerAngles;
+			var newRot = transform.eulerAngles;
+			newRot.y = cameraRot.y;
+			transform.rotation = Quaternion.Euler(newRot + rotationOffset);
 		}
 		
     }
