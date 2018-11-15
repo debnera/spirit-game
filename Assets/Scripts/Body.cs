@@ -29,6 +29,7 @@ public class Body : MonoBehaviour
         }
         Debug.Log("Attaching bodypart with id " + bodyPart.GetID().ToString());
         closestConnector.AttachTo(bodyPart);
+        OnAttach();
     }
 
 
@@ -39,7 +40,7 @@ public class Body : MonoBehaviour
         float minDistance = 9999;
         foreach (var connector in BodyPartConnectors)
         {
-            if (connector.IsEmpty())
+            if (!connector.IsEmpty())
                 continue;
 
             float distance = Vector3.Distance(connector.transform.position, position);
@@ -51,5 +52,24 @@ public class Body : MonoBehaviour
                 
         }
         return closest;
+    }
+
+    void OnAttach()
+    {
+        int connected = 0;
+        foreach (var connector in BodyPartConnectors)
+        {
+            if (!connector.IsEmpty())
+                connected++;
+        }
+        Debug.Log(connected);
+        if (connected > 3)
+        {
+            PlayerController playerController = FindObjectOfType<PlayerController>();
+            if (playerController)
+            {
+                playerController.WalkingMode = true;
+            }
+        }
     }
 }

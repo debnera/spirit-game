@@ -5,12 +5,15 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-    public Transform camera;
+	public bool WalkingMode;
+	public Transform camera;
     public float walkingSpeed = 10;
     public float jumpingSpeed = 10;
     public float groundDetectionDistance = 1f;
     private float rotation;
     private Rigidbody rb;
+	public Vector3 rotationOffset;
+	
 
 	// Use this for initialization
 	void Start ()
@@ -43,24 +46,41 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(cameraForward * walkingSpeed, ForceMode.VelocityChange);
 
 	    }
+		
+		
+		var movementVector = new Vector3();
+		
 	    if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 	    {
-	        rb.velocity += -cameraRight * walkingSpeed;
+	        movementVector = -cameraRight * walkingSpeed;
 	    }
 	    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 	    {
-	        rb.velocity += cameraRight * walkingSpeed;
+	        movementVector = cameraRight * walkingSpeed;
 	    }
 	    if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
 	    {
-	        rb.velocity += -cameraForward * walkingSpeed;
+	        movementVector = -cameraForward * walkingSpeed;
 	    }
 	    if (Input.GetKeyDown(KeyCode.Space) && IsOnGround())
 	    {
-	        rb.velocity += Vector3.up * jumpingSpeed;
+	        movementVector = Vector3.up * jumpingSpeed;
 	    }
 
-        transform.rotation = Quaternion.Euler(0, rotation, 0);
+		if (WalkingMode)
+		{
+			rb.velocity += movementVector;
+			var cameraRot = camera.transform.eulerAngles;
+			Debug.Log(cameraRot);
+			var newRot = new Vector3(0, cameraRot.y, 0);
+			transform.rotation = Quaternion.Euler(newRot + rotationOffset);
+		}
+		else
+		{
+			rb.AddForce(movementVector);
+			rb.AddTorque(movementVector);
+		}
+		
     }
 
     bool IsOnGround()

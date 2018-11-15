@@ -21,7 +21,7 @@ public class BodyPartConnector : MonoBehaviour
 
     public bool IsEmpty()
     {
-        return attachedPart != null;
+        return attachedPart == null;
     }
 
     public void AttachTo(BodyPart bodyPart)
