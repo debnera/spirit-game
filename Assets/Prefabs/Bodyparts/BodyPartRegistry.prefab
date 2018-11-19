@@ -52,4 +52,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BodyParts:
-  - {fileID: 114682956377141390, guid: a65d1f78ee77c2444bca40869f6d32b1, type: 2}
+  - id: 10
+    bodyPart: {fileID: 114538611705063646, guid: d7b0c51ead354ac4d8ce7f5e519612f8,
+      type: 2}
+  - id: 11
+    bodyPart: {fileID: 114890528720590384, guid: c60330f92bef4ed4f9e79ed69564a746,
+      type: 2}
+  - id: 20
+    bodyPart: {fileID: 114646655594210556, guid: 9edd21953a7fded488aeedc9278133ba,
+      type: 2}
+  - id: 30
+    bodyPart: {fileID: 114972942902383032, guid: ba96f4797c4b23542990b044e3236447,
+      type: 2}
