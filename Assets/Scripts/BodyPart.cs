@@ -5,17 +5,20 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class BodyPart : MonoBehaviour
 {
-
     public GameObject hardPoint;
-    private BodyPartRegistry registry;
-    private int ID = -1;
+    //private BodyPartRegistry registry;
+    public int ID = -1;
     private bool attached = false;
+    private BodyPart parent;
 
     void Start()
     {
+        /*
         registry = BodyPartRegistry.GetInstance();
         if (registry)
             ID = registry.GetID(this);
+        */
+
     }
 
     public int GetID()
@@ -33,11 +36,11 @@ public class BodyPart : MonoBehaviour
         attached = value;
     }
 
-    public void AttachTo(GameObject parent)
+    public void AttachTo(GameObject newParent)
     {
         if (!attached)
         {
-            transform.parent = parent.transform;
+            transform.parent = newParent.transform;
             attached = true;
         }
             

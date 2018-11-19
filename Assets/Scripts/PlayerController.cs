@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
-	public bool WalkingMode;
+    public GameObject StatueBodyPrefab;
+    public bool WalkingMode;
 	public Transform camera;
     public float walkingSpeed = 10;
     public float jumpingSpeed = 10;
@@ -15,6 +17,7 @@ public class PlayerController : MonoBehaviour
 	public Vector3 rotationOffset;
 	public float movementForce = 1;
 	public float movementTorque = 1;
+
 	
 
 	// Use this for initialization
@@ -50,11 +53,29 @@ public class PlayerController : MonoBehaviour
 		    movementVector = cameraForward * walkingSpeed;
 
 	    }
-		
-		
-		
-		
-	    if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
+
+
+
+	    if (Input.GetKey(KeyCode.K))
+	    {
+	        // Debug save
+	        var body = GetComponentInChildren<Body>();
+	        if (body)
+	        {
+	            body.Save(GlobalSettings.GetStatueSavePath(), "test.statue");
+	        }
+	    }
+
+	    if (Input.GetKey(KeyCode.L))
+	    {
+	        // Debug load
+	        var newStatue = Instantiate(StatueBodyPrefab);
+	        newStatue.transform.position = transform.position + new Vector3(0, 3, 0);
+            var body = newStatue.GetComponent<Body>();
+            body.Load(GlobalSettings.GetStatueSavePath() + Path.DirectorySeparatorChar + "test.statue");
+            body.FreezeToStatue();
+	    }
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 	    {
 	        movementVector += -cameraRight * walkingSpeed;
 	    }
@@ -95,6 +116,15 @@ public class PlayerController : MonoBehaviour
         var hitMask = ~LayerMask.NameToLayer("Player"); // Ignore player
         Debug.DrawRay(transform.position, Vector3.down * groundDetectionDistance, Color.green, 2f);
         return Physics.Raycast(transform.position, Vector3.down, groundDetectionDistance, hitMask);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Body body = GetComponentInChildren<Body>();
+        if (body)
+        {
+            body.HandleCollision(collision);
+        }
     }
 
 }

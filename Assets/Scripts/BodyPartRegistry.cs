@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditorInternal;
 using UnityEngine;
@@ -6,16 +7,51 @@ using UnityEngine;
 public class BodyPartRegistry : MonoBehaviour
 {
 
-    public List<BodyPart> BodyParts;
+    [Serializable]
+    public struct BodyPartID
+    {
+        public int id;
+        public BodyPart bodyPart;
+    }
 
+    public BodyPartID[] BodyParts;
+
+    void Awake()
+    {
+        TestIDs();
+    }
+
+    public void TestIDs()
+    {
+        foreach (var keyValuePair in BodyParts)
+        {
+            if (keyValuePair.id != keyValuePair.bodyPart.GetID())
+            {
+                Debug.LogError("BodyPart id does not match in BodyPartRegistry! (" +
+                               keyValuePair.id + " != " + keyValuePair.bodyPart.GetID());
+            }
+        }
+    }
+
+
+    /*
     public int GetID(BodyPart BodyPart)
     {
         return BodyParts.FindIndex(obj => obj == BodyPart);
     }
+    */
 
-    public BodyPart GetBodyPart(int index)
+    public BodyPart GetBodyPart(int id)
     {
-        return BodyParts[index];
+        foreach (var keyValuePair in BodyParts)
+        {
+            if (keyValuePair.id == id)
+            {
+                return keyValuePair.bodyPart;
+            }
+        }
+
+        return null;
     }
 
     public static BodyPartRegistry GetInstance()

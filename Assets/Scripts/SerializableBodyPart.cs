@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SerializableBodyPart : MonoBehaviour
+public class SerializableBodyPart
 {
     public SerializableVector3 position;
     public SerializableVector3 rotation;
@@ -16,12 +17,12 @@ public class SerializableBodyPart : MonoBehaviour
         this.id = id;
     }
 
-    public SerializableBodyPart FromBodyPart(BodyPart BodyPart)
+    static public SerializableBodyPart FromBodyPart(BodyPart BodyPart)
     {
         return new SerializableBodyPart(BodyPart.transform.localPosition, BodyPart.transform.localEulerAngles, BodyPart.GetID());
     }
 
-    public BodyPart ToBodyPart(SerializableBodyPart serializableBodyPart, Transform parent)
+    static public BodyPart ToBodyPart(SerializableBodyPart serializableBodyPart, Transform parent)
     {
         //BodyPart newBodyPart = Instant
         BodyPartRegistry registry = BodyPartRegistry.GetInstance();
@@ -29,9 +30,23 @@ public class SerializableBodyPart : MonoBehaviour
         {
             return new BodyPart();
         }
-        BodyPart newBodyPart = Instantiate(registry.GetBodyPart(id), parent);
-        newBodyPart.transform.localPosition = position;
-        newBodyPart.transform.localEulerAngles = rotation;
-        return newBodyPart;
+
+        try
+        {
+            BodyPart newBodyPart = GameObject.Instantiate(registry.GetBodyPart(serializableBodyPart.id), parent);
+            newBodyPart.transform.localPosition = serializableBodyPart.position;
+            newBodyPart.transform.localEulerAngles = serializableBodyPart.rotation;
+            return newBodyPart;
+        }
+        catch (Exception e)
+        {
+            Debug.Log("Could not instantiate a new BodyPart with id: " + serializableBodyPart.id + "\nError: " + e.Message);
+        }
+        return new BodyPart();
+    }
+
+    public BodyPart ToBodyPart(Transform parent)
+    {
+        return ToBodyPart(this, parent);
     }
 }

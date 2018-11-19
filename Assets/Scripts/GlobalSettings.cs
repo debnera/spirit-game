@@ -15,4 +15,9 @@ public class GlobalSettings : MonoBehaviour {
     {
         return GetSavefilePath() + Path.DirectorySeparatorChar + "footsteps" + Path.DirectorySeparatorChar;
     }
+
+    public static String GetStatueSavePath()
+    {
+        return GetSavefilePath() + Path.DirectorySeparatorChar + "statues" + Path.DirectorySeparatorChar;
+    }
 }
