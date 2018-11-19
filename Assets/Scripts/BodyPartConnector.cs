@@ -50,6 +50,7 @@ public class BodyPartConnector : MonoBehaviour
         var hardPoint = bodyPart.GetHardPoint();
         Vector3 pos = bodyPart.transform.position - hardPoint.transform.position;
         bodyPart.transform.parent = transform;
+        bodyPart.transform.localPosition = -hardPoint.transform.localPosition;
         /*
         Vector3 scale = bodyPart.transform.localScale;
         scale.x /= transform.localScale.x;
@@ -58,7 +59,8 @@ public class BodyPartConnector : MonoBehaviour
         bodyPart.transform.localScale = scale;
         */
         bodyPart.transform.localRotation = Quaternion.identity;
-        ConnectJoint(bodyPart.gameObject.GetComponent<Rigidbody>(), hardPoint.transform.localPosition);
+        bodyPart.GetComponentInChildren<Rigidbody>().isKinematic = true;
+        //ConnectJoint(bodyPart.gameObject.GetComponent<Rigidbody>(), hardPoint.transform.localPosition);
     }
 
     public void AttachTo(Body otherBody)
