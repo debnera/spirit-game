@@ -108,7 +108,7 @@ public class Body : MonoBehaviour
         }
         */
 
-        // TODO: Remove Player layer
+
     }
 
     private void RecursiveFreeze(GameObject obj)

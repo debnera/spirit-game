@@ -140,7 +140,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1690484006212890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -198.61996, y: 5.3732476, z: -11.954049}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 20, y: 20, z: 20}
   m_Children:
   - {fileID: 4595489006695790}
@@ -154,22 +154,22 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1927883130789004}
-  m_LocalRotation: {x: 0, y: 0, z: 0.013154481, w: 0.9999135}
-  m_LocalPosition: {x: -0.01825785, y: 0.08656158, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4799642603908426}
   m_Father: {fileID: 4223085727462304}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
 --- !u!4 &4776942689433080
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1543405215053568}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7043268, w: 0.7098759}
-  m_LocalPosition: {x: -0.029297434, y: 0.0865701, z: -0.0010390022}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.0218, z: 0}
   m_LocalScale: {x: 0.24358979, y: 0.19300677, z: 0.24358979}
   m_Children: []
   m_Father: {fileID: 4223085727462304}
@@ -181,8 +181,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1322232550451058}
-  m_LocalRotation: {x: -0.0008124206, y: -0.061754655, z: -0.0131293675, w: 0.9980047}
-  m_LocalPosition: {x: -0.0028906316, y: -4.3975237e-18, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4115847887190318}
@@ -246,7 +246,7 @@ CapsuleCollider:
   m_Radius: 0.02293984
   m_Height: 0.2397104
   m_Direction: 1
-  m_Center: {x: -0.0071670674, y: 0.07409997, z: 0.0005094572}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &137928540564408236
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
