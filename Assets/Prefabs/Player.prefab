@@ -873,7 +873,7 @@ MonoBehaviour:
   WalkingMode: 1
   camera: {fileID: 0}
   walkingSpeed: 10
-  jumpingSpeed: 10
+  jumpingSpeed: 40
   groundDetectionDistance: 1.2
   rotationOffset: {x: 0, y: 0, z: 0}
   movementForce: 1000
