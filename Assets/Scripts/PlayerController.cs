@@ -53,28 +53,6 @@ public class PlayerController : MonoBehaviour
 		    movementVector = cameraForward * walkingSpeed;
 
 	    }
-
-
-
-	    if (Input.GetKey(KeyCode.K))
-	    {
-	        // Debug save
-	        var body = GetComponentInChildren<Body>();
-	        if (body)
-	        {
-	            body.Save(GlobalSettings.GetStatueSavePath(), "test.statue");
-	        }
-	    }
-
-	    if (Input.GetKey(KeyCode.L))
-	    {
-	        // Debug load
-	        var newStatue = Instantiate(StatueBodyPrefab);
-	        newStatue.transform.position = transform.position + new Vector3(0, 3, 0);
-            var body = newStatue.GetComponent<Body>();
-            body.Load(GlobalSettings.GetStatueSavePath() + Path.DirectorySeparatorChar + "test.statue");
-            body.FreezeToStatue();
-	    }
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 	    {
 	        movementVector += -cameraRight * walkingSpeed;
@@ -109,6 +87,11 @@ public class PlayerController : MonoBehaviour
 			transform.rotation = Quaternion.Euler(newRot + rotationOffset);
 		}
 		
+    }
+
+    public void SetCamera(Transform mainCamera)
+    {
+        camera = mainCamera;
     }
 
     bool IsOnGround()

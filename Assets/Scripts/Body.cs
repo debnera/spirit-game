@@ -98,10 +98,25 @@ public class Body : MonoBehaviour
 
     public void FreezeToStatue()
     {
+        RecursiveFreeze(transform.root.gameObject);
+        /*
         Freeze(gameObject);
+        
         foreach (var connector in BodyPartConnectors)
         {
             Freeze(connector.attachedPart);
+        }
+        */
+
+        // TODO: Remove Player layer
+    }
+
+    private void RecursiveFreeze(GameObject obj)
+    {
+        Freeze(obj);
+        foreach (Transform child in obj.transform)
+        {
+            RecursiveFreeze(child.gameObject);
         }
     }
 
@@ -109,11 +124,12 @@ public class Body : MonoBehaviour
     {
         if (!obj)
             return;
+        obj.layer = LayerMask.NameToLayer("Default");
         var rbody = obj.GetComponent<Rigidbody>();
         if (rbody)
         {
-            rbody.isKinematic = false;
-            rbody.detectCollisions = false;
+            rbody.isKinematic = true;
+            rbody.detectCollisions = true;
         }
     }
 
