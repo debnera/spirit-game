@@ -83,7 +83,9 @@ MonoBehaviour:
   PlayerCamera: {fileID: 0}
   PlayerCameraTransform: {fileID: 0}
   CurrentPlayer: {fileID: 0}
-  PlayerPrefab: {fileID: 1311561970986822, guid: 13bca680d2dbb6b46aad2f0f48d29199,
+  PlayerPrefab: {fileID: 1778873377918860, guid: 75bbb5b4f413a1f43b918b6b5bd0bdf3,
+    type: 2}
+  StatuePrefab: {fileID: 1138982408692352, guid: 18b05351a0a622144b51d24c31335366,
     type: 2}
   SpawnPoint: {fileID: 1491640443346594}
   RespawnDelay: 1

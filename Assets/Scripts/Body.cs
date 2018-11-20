@@ -37,7 +37,7 @@ public class Body : MonoBehaviour
         BodyPartConnector closestConnector = GetClosestEmptyConnector(collision.contacts[0].point);
         if (!closestConnector)
         {
-            Debug.Log("No empty connectors found!");
+            //Debug.Log("No empty connectors found!");
             return;
         }
         BodyPart bodyPart = collision.gameObject.GetComponent<BodyPart>();
@@ -65,7 +65,7 @@ public class Body : MonoBehaviour
                 continue;
 
             float distance = Vector3.Distance(connector.transform.position, position);
-            Debug.Log(distance);
+            //Debug.Log(distance);
             if (!closest || distance < minDistance)
             {
                 minDistance = distance;
@@ -73,7 +73,7 @@ public class Body : MonoBehaviour
             }
                 
         }
-        Debug.Log("Mindistance: " + minDistance);
+        //Debug.Log("Mindistance: " + minDistance);
         return closest;
     }
 
@@ -139,9 +139,13 @@ public class Body : MonoBehaviour
         Directory.CreateDirectory(path);
         FileStream fs = new FileStream(fullpath, FileMode.Create);
         BinaryFormatter formatter = new BinaryFormatter();
+        SerializableVector3 position = transform.position;
+        SerializableVector3 rotation = transform.eulerAngles;
         try
         {
             formatter.Serialize(fs, ToSerializableList());
+            formatter.Serialize(fs, position);
+            formatter.Serialize(fs, rotation);
             Debug.Log("Statue saved to " + path);
         }
         catch (SerializationException e)
@@ -170,8 +174,11 @@ public class Body : MonoBehaviour
             Debug.Log("Loading " + path);
             BinaryFormatter formatter = new BinaryFormatter();
             bodyParts = (List<SerializableBodyPart>)formatter.Deserialize(fs);
+            SerializableVector3 position = (SerializableVector3)formatter.Deserialize(fs);
+            SerializableVector3 rotation = (SerializableVector3)formatter.Deserialize(fs);
             FromSerializableList(bodyParts);
-
+            transform.position = position;
+            transform.eulerAngles = rotation;
         }
         catch (Exception e)
         {
@@ -182,9 +189,6 @@ public class Body : MonoBehaviour
         {
             fs.Close();
         }
-
-        
-
         return true;
     }
 
@@ -198,10 +202,9 @@ public class Body : MonoBehaviour
             else
             {
                 BodyPart part = connector.attachedPart.GetComponent<BodyPart>();
-                SerializableBodyPart serializablePart = SerializableBodyPart.FromBodyPart(part);
+                SerializableBodyPart serializablePart = new SerializableBodyPart(connector.transform.localPosition, connector.transform.localEulerAngles, part.GetID());
                 bodyparts.Add(serializablePart);
             }
-
         }
         return bodyparts;
     }
@@ -213,8 +216,11 @@ public class Body : MonoBehaviour
             if (serializableBodyParts[i] != null)
             {
                 BodyPartConnector connector = BodyPartConnectors[i];
-                BodyPart bodyPart = serializableBodyParts[i].ToBodyPart(connector.transform);
-                connector.attachedPart = bodyPart.gameObject;
+                SerializableBodyPart serializableBodyPart = serializableBodyParts[i];
+                BodyPart bodyPart = serializableBodyPart.ToBodyPart();
+                connector.AttachTo(bodyPart);
+                connector.transform.localPosition = serializableBodyPart.position;
+                connector.transform.eulerAngles = serializableBodyPart.rotation;
             }
         }
     }

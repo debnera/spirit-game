@@ -17,36 +17,27 @@ public class SerializableBodyPart
         this.id = id;
     }
 
-    static public SerializableBodyPart FromBodyPart(BodyPart BodyPart)
+    static public BodyPart ToBodyPart(SerializableBodyPart serializableBodyPart)
     {
-        return new SerializableBodyPart(BodyPart.transform.localPosition, BodyPart.transform.localEulerAngles, BodyPart.GetID());
-    }
-
-    static public BodyPart ToBodyPart(SerializableBodyPart serializableBodyPart, Transform parent)
-    {
-        //BodyPart newBodyPart = Instant
         BodyPartRegistry registry = BodyPartRegistry.GetInstance();
         if (!registry)
         {
-            return new BodyPart();
+            return null;
         }
-
         try
         {
-            BodyPart newBodyPart = GameObject.Instantiate(registry.GetBodyPart(serializableBodyPart.id), parent);
-            newBodyPart.transform.localPosition = serializableBodyPart.position;
-            newBodyPart.transform.localEulerAngles = serializableBodyPart.rotation;
+            BodyPart newBodyPart = GameObject.Instantiate(registry.GetBodyPart(serializableBodyPart.id));
             return newBodyPart;
         }
         catch (Exception e)
         {
             Debug.Log("Could not instantiate a new BodyPart with id: " + serializableBodyPart.id + "\nError: " + e.Message);
+            return null;
         }
-        return new BodyPart();
     }
 
-    public BodyPart ToBodyPart(Transform parent)
+    public BodyPart ToBodyPart()
     {
-        return ToBodyPart(this, parent);
+        return ToBodyPart(this);
     }
 }

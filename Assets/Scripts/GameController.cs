@@ -11,11 +11,13 @@ public class GameController : MonoBehaviour
     public Transform PlayerCameraTransform;
     public GameObject CurrentPlayer;
     public GameObject PlayerPrefab;
+    public GameObject StatuePrefab;
     public GameObject SpawnPoint;
 
     public float RespawnDelay = 1;
 
-    private bool RespawnPressed = false;
+    private bool Respawning = false;
+    private string PreviousStatueFilename;
 
 	// Use this for initialization
 	void Start () {
@@ -30,37 +32,54 @@ public class GameController : MonoBehaviour
 	// Update is called once per frame
 	void Update () {
 
-	    if (Input.GetKeyDown(KeyCode.R) && !RespawnPressed)
+	    if (Input.GetKeyDown(KeyCode.R) && !Respawning)
 	    {
-	        RespawnPressed = true;
 	        DisablePlayerControls();
 	    }
-	    if (Input.GetKeyUp(KeyCode.R) && RespawnPressed)
+	    if (Input.GetKeyUp(KeyCode.R) && !Respawning)
 	    {
-	        RespawnPressed = false;
+	        Respawning = true;
 	        MakeStatue();
+            SaveStatue();
             Invoke("Respawn", RespawnDelay);
 	    }
 
-        if (Input.GetKey(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K))
 	    {
 	        // Debug save
-	        var body = GetComponentInChildren<Body>();
-	        if (body)
-	        {
-	            body.Save(GlobalSettings.GetStatueSavePath(), "test.statue");
-	        }
+	        SaveStatue();
+	        
 	    }
 
-	    if (Input.GetKey(KeyCode.L))
+	    if (Input.GetKeyDown(KeyCode.L))
 	    {
 	        // Debug load
-	        var newStatue = Instantiate(PlayerPrefab);
-	        newStatue.transform.position = transform.position + new Vector3(0, 3, 0);
-	        var body = newStatue.GetComponent<Body>();
-	        body.Load(GlobalSettings.GetStatueSavePath() + Path.DirectorySeparatorChar + "test.statue");
+	        var pos = transform.position;
+	        if (CurrentPlayer)
+	            pos = CurrentPlayer.transform.position;
+	        var newStatue = Instantiate(StatuePrefab);
+	        newStatue.transform.position = pos + new Vector3(0, 3, 0);
+	        var body = newStatue.GetComponentInChildren<Body>();
+	        body.Load(GlobalSettings.GetStatueSavePath() + PreviousStatueFilename);
 	        body.FreezeToStatue();
 	    }
+    }
+
+    public void SaveStatue()
+    {
+        if (CurrentPlayer)
+        {
+            var body = CurrentPlayer.GetComponentInChildren<Body>();
+            if (body)
+            {
+                PreviousStatueFilename = GlobalSettings.GenerateStatueFilename();
+                body.Save(GlobalSettings.GetStatueSavePath(), PreviousStatueFilename);
+            }
+            else
+            {
+                Debug.LogError("Cannot find a body to save!");
+            }
+        }
     }
 
     public void MakeStatue()
@@ -78,6 +97,7 @@ public class GameController : MonoBehaviour
 
     public void Respawn()
     {
+        Respawning = false;
         CurrentPlayer = SpawnPlayer();
         SetCameraTarget(CurrentPlayer);
     }
