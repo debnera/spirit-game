@@ -24,7 +24,8 @@ public class GameController : MonoBehaviour
 	        CurrentPlayer = SpawnPlayer();
 	    }
         SetCameraTarget(CurrentPlayer);
-	}
+	    CurrentPlayer.GetComponent<PlayerController>().SetCamera(PlayerCameraTransform);
+    }
 	
 	// Update is called once per frame
 	void Update () {

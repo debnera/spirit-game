@@ -47,10 +47,16 @@ public class BodyPartConnector : MonoBehaviour
         //AdjustPosition(bodyPart);
         attachedPart = bodyPart.gameObject;
         bodyPart.SetAttached(true);
+        bodyPart.gameObject.transform.parent = transform;
+        bodyPart.transform.localEulerAngles = new Vector3(0, 0, 0);
+        bodyPart.transform.localPosition = Vector3.zero;
+        bodyPart.GetComponentInChildren<Rigidbody>().isKinematic = true;
+        /*
         var hardPoint = bodyPart.GetHardPoint();
         Vector3 pos = bodyPart.transform.position - hardPoint.transform.position;
         bodyPart.transform.parent = transform;
         bodyPart.transform.localPosition = -hardPoint.transform.localPosition;
+        */
         /*
         Vector3 scale = bodyPart.transform.localScale;
         scale.x /= transform.localScale.x;
@@ -58,8 +64,8 @@ public class BodyPartConnector : MonoBehaviour
         scale.z /= transform.localScale.z;
         bodyPart.transform.localScale = scale;
         */
-        bodyPart.transform.localRotation = Quaternion.identity;
-        bodyPart.GetComponentInChildren<Rigidbody>().isKinematic = true;
+        //bodyPart.transform.localRotation = Quaternion.identity;
+
         //ConnectJoint(bodyPart.gameObject.GetComponent<Rigidbody>(), hardPoint.transform.localPosition);
     }
 
