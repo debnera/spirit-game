@@ -28,4 +28,23 @@ public class GlobalSettings : MonoBehaviour {
         String filename = unix_timestamp + ".statue";
         return filename;
     }
+
+    public static List<String> GetAllStatueFilenames()
+    {
+        String path = GetStatueSavePath();
+        List<String> files = new List<string>();
+        if (!Directory.Exists(path))
+        {
+            Debug.Log("Save folder not found - is this your first game?");
+            return files;
+        }
+
+        foreach (string name in Directory.GetFiles(path))
+        {
+            if (name.EndsWith(".statue"))
+                files.Add(name);
+        }
+        files.Sort();
+        return files;
+    }
 }

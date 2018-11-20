@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework.Constraints;
@@ -20,6 +21,11 @@ public class GameController : MonoBehaviour
     private string PreviousStatueFilename;
 
 	// Use this for initialization
+    void Awake()
+    {
+        LoadAllStatues();
+    }
+
 	void Start () {
 	    if (!CurrentPlayer)
 	    {
@@ -53,15 +59,8 @@ public class GameController : MonoBehaviour
 
 	    if (Input.GetKeyDown(KeyCode.L))
 	    {
-	        // Debug load
-	        var pos = transform.position;
-	        if (CurrentPlayer)
-	            pos = CurrentPlayer.transform.position;
-	        var newStatue = Instantiate(StatuePrefab);
-	        newStatue.transform.position = pos + new Vector3(0, 3, 0);
-	        var body = newStatue.GetComponentInChildren<Body>();
-	        body.Load(GlobalSettings.GetStatueSavePath() + PreviousStatueFilename);
-	        body.FreezeToStatue();
+            // Debug load
+	        LoadStatue(GlobalSettings.GetStatueSavePath() + PreviousStatueFilename);
 	    }
     }
 
@@ -82,6 +81,28 @@ public class GameController : MonoBehaviour
         }
     }
 
+    void LoadAllStatues()
+    {
+        foreach (var name in GlobalSettings.GetAllStatueFilenames())
+        {
+            Debug.Log("Loading " + name);
+            LoadStatue(name);
+        }
+            
+    }
+
+    public void LoadStatue(String path)
+    {
+        //var pos = transform.position;
+        //if (CurrentPlayer)
+        //    pos = CurrentPlayer.transform.position;
+        var newStatue = Instantiate(StatuePrefab);
+        //newStatue.transform.position = pos + new Vector3(0, 3, 0);
+        var body = newStatue.GetComponentInChildren<Body>();
+        body.Load(path);
+        body.FreezeToStatue();
+    }
+
     public void MakeStatue()
     {
         // Freeze current player
@@ -91,6 +112,7 @@ public class GameController : MonoBehaviour
             if (body)
             {
                 body.FreezeToStatue();
+                body.enabled = false;
             }
         }
     }
