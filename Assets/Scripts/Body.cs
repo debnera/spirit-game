@@ -99,16 +99,7 @@ public class Body : MonoBehaviour
     public void FreezeToStatue()
     {
         RecursiveFreeze(transform.root.gameObject);
-        /*
-        Freeze(gameObject);
-        
-        foreach (var connector in BodyPartConnectors)
-        {
-            Freeze(connector.attachedPart);
-        }
-        */
-
-
+        enabled = false;
     }
 
     private void RecursiveFreeze(GameObject obj)

@@ -112,7 +112,6 @@ public class GameController : MonoBehaviour
             if (body)
             {
                 body.FreezeToStatue();
-                body.enabled = false;
             }
         }
     }
