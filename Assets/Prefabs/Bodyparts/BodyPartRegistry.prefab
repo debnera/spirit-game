@@ -70,8 +70,9 @@ MonoBehaviour:
   - id: 50
     bodyPart: {fileID: 114285220955927086, guid: a05c510fb955fc843930ad1ba10fe868,
       type: 2}
-  - id: 51
-    bodyPart: {fileID: 0}
+  - id: 313
+    bodyPart: {fileID: 114538611705063646, guid: 533f50e568e6fd4439bebf6abba4b834,
+      type: 2}
   - id: 41
     bodyPart: {fileID: 114555368411393322, guid: 0341a3ede5a0b5f4da1a91fa87123de0,
       type: 2}
@@ -92,4 +93,10 @@ MonoBehaviour:
       type: 2}
   - id: 213
     bodyPart: {fileID: 114538611705063646, guid: f5e1da347ae731144ac58ce9be41a9a9,
+      type: 2}
+  - id: 311
+    bodyPart: {fileID: 114560923277915298, guid: 58cf17e2f241fc04b8958ccbd53b0f25,
+      type: 2}
+  - id: 312
+    bodyPart: {fileID: 114569561329902534, guid: 17846777de7752444bf6448a48feec50,
       type: 2}
