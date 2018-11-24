@@ -64,3 +64,21 @@ MonoBehaviour:
   - id: 30
     bodyPart: {fileID: 114972942902383032, guid: ba96f4797c4b23542990b044e3236447,
       type: 2}
+  - id: 40
+    bodyPart: {fileID: 114560923277915298, guid: 9f07840e9f9b8bf499ee4790e48c2591,
+      type: 2}
+  - id: 50
+    bodyPart: {fileID: 114285220955927086, guid: a05c510fb955fc843930ad1ba10fe868,
+      type: 2}
+  - id: 51
+    bodyPart: {fileID: 114569561329902534, guid: aad52a0f62c21f4448cb0c77703109bd,
+      type: 2}
+  - id: 41
+    bodyPart: {fileID: 114555368411393322, guid: 0341a3ede5a0b5f4da1a91fa87123de0,
+      type: 2}
+  - id: 52
+    bodyPart: {fileID: 114757027348193182, guid: d34e611501125364e81aa18616402e81,
+      type: 2}
+  - id: 30
+    bodyPart: {fileID: 114972942902383032, guid: ba96f4797c4b23542990b044e3236447,
+      type: 2}
