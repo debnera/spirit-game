@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class Body : MonoBehaviour
 {
     public List<BodyPartConnector> bodyPartConnectors;
+    public BodyPartConnector[] legConnectors = new BodyPartConnector[2];
     public bool attachedToPlayer;
     private float scale = 1;
     private Vector3 originalScale;
@@ -24,6 +25,23 @@ public class Body : MonoBehaviour
 	void Update () {
 		
 	}
+
+    public float GetMaxLegHeight()
+    {
+        float maxHeight = 0;
+        foreach (var bodyPartConnector in legConnectors)
+        {
+            if (bodyPartConnector.attachedPart)
+            {
+                BodyPart bodyPart = bodyPartConnector.attachedPart.GetComponent<BodyPart>();
+                if (bodyPart)
+                {
+                    maxHeight = Mathf.Max(bodyPart.GetHeight());
+                }
+            }
+        }
+        return maxHeight;
+    }
 
     public bool IsAttachedToPlayer()
     {
@@ -88,6 +106,7 @@ public class Body : MonoBehaviour
 
     void OnAttach()
     {
+        PlayerController playerController = FindObjectOfType<PlayerController>();
         int connected = 0;
         foreach (var connector in bodyPartConnectors)
         {
@@ -97,11 +116,15 @@ public class Body : MonoBehaviour
         Debug.Log(connected);
         if (connected > 3)
         {
-            PlayerController playerController = FindObjectOfType<PlayerController>();
             if (playerController)
             {
                 playerController.WalkingMode = true;
             }
+        }
+
+        if (playerController)
+        {
+            playerController.OnBodyPartAttach();
         }
     }
 

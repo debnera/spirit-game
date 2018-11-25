@@ -10,6 +10,7 @@ public class BodyPart : MonoBehaviour
     public int ID = -1;
     private bool attached = false;
     private BodyPart parent;
+    private float height;
 
     void Start()
     {
@@ -18,7 +19,27 @@ public class BodyPart : MonoBehaviour
         if (registry)
             ID = registry.GetID(this);
         */
+        CalculateHeight();
+    }
 
+    void CalculateHeight()
+    {
+        SkinnedMeshRenderer mesh = GetComponentInChildren<SkinnedMeshRenderer>();
+        if (mesh)
+        {
+            // Guess that the height is the length of the longest side of the bounding box
+            float maxVal = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                maxVal = Mathf.Max(maxVal, mesh.bounds.extents[i]);
+            }
+            height = maxVal * 2;
+        }
+    }
+
+    public float GetHeight()
+    {
+        return height;
     }
 
     public int GetID()

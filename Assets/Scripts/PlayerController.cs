@@ -19,15 +19,22 @@ public class PlayerController : MonoBehaviour
 	public float movementTorque = 1;
     private Body body;
 
-	
+    private Vector3 feetColliderOffset;
+    private CapsuleCollider feetCollider;
 
-	// Use this for initialization
-	void Start ()
+
+
+    // Use this for initialization
+    void Start ()
 	{
 	    rb = GetComponent<Rigidbody>();
 	    rotation = transform.rotation.y;
 	    body = GetComponentInChildren<Body>();
-    }
+	    feetCollider = GetComponent<CapsuleCollider>();
+	    if (feetCollider)
+	        feetColliderOffset = feetCollider.center;
+        SetColliderHeight(0);
+	}
 	
 	// Update is called once per frame
 	void FixedUpdate ()
@@ -104,7 +111,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Body body = GetComponentInChildren<Body>();
         if (body)
         {
             body.HandleCollision(collision);
@@ -115,6 +121,29 @@ public class PlayerController : MonoBehaviour
     {
         if (body)
             body.SetScale(scale);
+    }
+
+    public void OnBodyPartAttach()
+    {
+        SetColliderHeight(body.GetMaxLegHeight());
+    }
+
+    public void SetColliderHeight(float height)
+    {
+        // Adjust the collider beneath the player to fit given height
+        if (!feetCollider) return;
+        float prevHeight = feetCollider.height;
+        feetCollider.height = height;
+        Vector3 newCenter = feetCollider.center;
+        newCenter.y = -feetCollider.height / 2 + feetColliderOffset.y;
+        feetCollider.center = newCenter;
+
+        // Adjust player position to avoid clipping the collider inside ground
+        float heightDifference = height - prevHeight;
+        Vector3 newPos = transform.localPosition;
+        newPos.y += heightDifference;
+        transform.localPosition = newPos;
+        Debug.Log("Adjusted player height to " + height.ToString());
     }
 
 }
