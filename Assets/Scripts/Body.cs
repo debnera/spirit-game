@@ -30,8 +30,9 @@ public class Body : MonoBehaviour
         return attachedToPlayer;
     }
 
-    public void SetScale(float scale)
+    public void SetScale(float newScale)
     {
+        scale = newScale;
         transform.localScale = originalScale * scale;
     }
 
@@ -177,10 +178,10 @@ public class Body : MonoBehaviour
             SerializableVector3 position = (SerializableVector3)formatter.Deserialize(fs);
             SerializableVector3 rotation = (SerializableVector3)formatter.Deserialize(fs);
             scale = (float)formatter.Deserialize(fs);
-            SetScale(scale);
             FromSerializableList(bodyParts);
             transform.position = position;
             transform.eulerAngles = rotation;
+            SetScale(scale);
         }
         catch (Exception e)
         {
