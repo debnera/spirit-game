@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework.Constraints;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityStandardAssets.Cameras;
 
 public class GameController : MonoBehaviour
@@ -15,53 +16,142 @@ public class GameController : MonoBehaviour
     public GameObject StatuePrefab;
     public GameObject SpawnPoint;
 
+    public GameObject StartUI;
+    public GameObject GameUI;
+    public GameObject EndUI;
+
+    public Text TimerText;
+
     public float RespawnDelay = 1;
 
     private bool Respawning = false;
     private string PreviousStatueFilename;
 
-	// Use this for initialization
+    
+    private float timer;
+    private bool Playing;
+
+    public enum GameState { StartScreen, Playing, EndScreen };
+
+    public GameState CurrentState = GameState.StartScreen;
+
+    // Use this for initialization
     void Awake()
     {
         LoadAllStatues();
     }
 
-	void Start () {
-	    if (!CurrentPlayer)
+	void Start ()
+	{
+	    SwitchUI(CurrentState);
+	    if (CurrentState == GameState.Playing)
 	    {
-	        CurrentPlayer = SpawnPlayer();
+            StartGame();
 	    }
-        SetCameraTarget(CurrentPlayer);
-	    CurrentPlayer.GetComponent<PlayerController>().SetCamera(PlayerCameraTransform);
+	}
+
+    void SwitchUI(GameState state)
+    {
+        StartUI.SetActive(false);
+        GameUI.SetActive(false);
+        EndUI.SetActive(false);
+        switch (state)
+        {
+            case GameState.StartScreen:
+                StartUI.SetActive(true);
+                break;
+            case GameState.Playing:
+                GameUI.SetActive(true);
+                break;
+            case GameState.EndScreen:
+                GameUI.SetActive(true);
+                break;
+        }
     }
+
+    void StartGame()
+    {
+        timer = 60;
+        Playing = true;
+        if (!CurrentPlayer)
+        {
+            CurrentPlayer = SpawnPlayer();
+        }
+        SetCameraTarget(CurrentPlayer);
+        CurrentPlayer.GetComponent<PlayerController>().SetCamera(PlayerCameraTransform);
+    }
+
 	
 	// Update is called once per frame
 	void Update () {
-
-	    if (Input.GetKeyDown(KeyCode.R) && !Respawning)
+	    switch (CurrentState)
 	    {
-	        DisablePlayerControls();
+	        case GameState.StartScreen:
+	            StartScreenUpdate();
+                break;
+	        case GameState.Playing:
+	            PlayingUpdate();
+	            break;
+	        case GameState.EndScreen:
+	            EndScreenUpdate();
+	            break;
 	    }
-	    if (Input.GetKeyUp(KeyCode.R) && !Respawning)
-	    {
-	        Respawning = true;
-	        MakeStatue();
+    }
+
+    void StartScreenUpdate()
+    {
+        if (Input.anyKeyDown)
+        {
+            CurrentState = GameState.Playing;
+            StartGame();
+            SwitchUI(CurrentState);
+        }
+    }
+
+    void EndScreenUpdate()
+    {
+        if (Input.anyKeyDown)
+        {
+            CurrentState = GameState.StartScreen;
+            SwitchUI(CurrentState);
+        }
+    }
+
+    void PlayingUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.R) && !Respawning)
+        {
+            DisablePlayerControls();
+        }
+        if (Input.GetKeyUp(KeyCode.R) && !Respawning)
+        {
+            Respawning = true;
+            MakeStatue();
             SaveStatue();
             Invoke("Respawn", RespawnDelay);
-	    }
+        }
 
         if (Input.GetKeyDown(KeyCode.K))
-	    {
-	        // Debug save
-	        SaveStatue();
-	        
-	    }
+        {
+            // Debug save
+            SaveStatue();
 
-	    if (Input.GetKeyDown(KeyCode.L))
-	    {
+        }
+
+        if (Input.GetKeyDown(KeyCode.L))
+        {
             // Debug load
-	        LoadStatue(GlobalSettings.GetStatueSavePath() + PreviousStatueFilename);
-	    }
+            LoadStatue(GlobalSettings.GetStatueSavePath() + PreviousStatueFilename);
+        }
+
+        if (TimerText && Playing)
+        {
+            timer -= Time.deltaTime;
+            int intTime = (int) Math.Ceiling(timer);
+            int minutes = intTime / 60;
+            int seconds = intTime - (60*minutes);
+            TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
     }
 
     public void SaveStatue()

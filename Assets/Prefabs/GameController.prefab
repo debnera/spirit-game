@@ -88,4 +88,9 @@ MonoBehaviour:
   StatuePrefab: {fileID: 1138982408692352, guid: 18b05351a0a622144b51d24c31335366,
     type: 2}
   SpawnPoint: {fileID: 1491640443346594}
+  StartUI: {fileID: 0}
+  GameUI: {fileID: 0}
+  EndUI: {fileID: 0}
+  TimerText: {fileID: 0}
   RespawnDelay: 1
+  CurrentState: 0
