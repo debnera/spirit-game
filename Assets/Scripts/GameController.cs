@@ -9,6 +9,7 @@ using UnityStandardAssets.Cameras;
 
 public class GameController : MonoBehaviour
 {
+    public float timeLimitSeconds = 60;
     public RotateAround rotatingCameraScript;
     public FreeLookCam freeLookCam;
     public Transform mainCameraTransform;
@@ -21,8 +22,8 @@ public class GameController : MonoBehaviour
     public GameObject gameUI;
     public GameObject endUI;
 
-    public GameObject startRotateFocusPoint;
-    public Vector3 rotateOffset;
+    public GameObject startScreenCameraFocusPoint;
+    public Vector3 startScreenCameraOffset;
 
     public Text timerText;
 
@@ -65,8 +66,8 @@ public class GameController : MonoBehaviour
                 if (rotatingCameraScript)
                 {
                     rotatingCameraScript.enabled = true;
-                    rotatingCameraScript.target = startRotateFocusPoint;
-                    rotatingCameraScript.SetOffset(rotateOffset);
+                    rotatingCameraScript.target = startScreenCameraFocusPoint;
+                    rotatingCameraScript.SetOffset(startScreenCameraOffset);
                 }
 
                 if (freeLookCam)
@@ -97,14 +98,14 @@ public class GameController : MonoBehaviour
                 {
                     freeLookCam.enabled = true;
                 }
-                gameUI.SetActive(true);
+                endUI.SetActive(true);
                 break;
         }
     }
 
     void StartGame()
     {
-        timer = 60;
+        timer = timeLimitSeconds;
         playing = true;
         if (!currentPlayer)
         {
@@ -177,13 +178,24 @@ public class GameController : MonoBehaviour
             LoadStatue(GlobalSettings.GetStatueSavePath() + previousStatueFilename);
         }
 
+        timer -= Time.deltaTime;
         if (timerText && playing)
         {
-            timer -= Time.deltaTime;
+            
             int intTime = (int) Math.Ceiling(timer);
             int minutes = intTime / 60;
             int seconds = intTime - (60*minutes);
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+        }
+
+        if (timer < 0)
+        {
+            MakeStatue();
+            DisablePlayerControls();
+            SaveStatue();
+            currentState = GameState.EndScreen;
+            SwitchUI(currentState);
+            currentPlayer = null;
         }
     }
 

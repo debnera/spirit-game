@@ -21,5 +21,9 @@ public class RotateAround : MonoBehaviour
         if (!target)
             return;
         transform.position = target.transform.position + offset;
+        foreach (Transform child in transform)
+        {
+            child.localRotation = new Quaternion();
+        }
     }
 }
