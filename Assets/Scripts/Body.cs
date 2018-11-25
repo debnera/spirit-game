@@ -9,13 +9,16 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class Body : MonoBehaviour
 {
-    public List<BodyPartConnector> BodyPartConnectors;
+    public List<BodyPartConnector> bodyPartConnectors;
     public bool attachedToPlayer;
+    private float scale = 1;
+    private Vector3 originalScale;
 
 	// Use this for initialization
-	void Start () {
-		
-	}
+    void Awake()
+    {
+        originalScale = transform.localScale;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -25,6 +28,11 @@ public class Body : MonoBehaviour
     public bool IsAttachedToPlayer()
     {
         return attachedToPlayer;
+    }
+
+    public void SetScale(float scale)
+    {
+        transform.localScale = originalScale * scale;
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -59,7 +67,7 @@ public class Body : MonoBehaviour
     {
         BodyPartConnector closest = null;
         float minDistance = 9999;
-        foreach (var connector in BodyPartConnectors)
+        foreach (var connector in bodyPartConnectors)
         {
             if (!connector.IsEmpty())
                 continue;
@@ -80,7 +88,7 @@ public class Body : MonoBehaviour
     void OnAttach()
     {
         int connected = 0;
-        foreach (var connector in BodyPartConnectors)
+        foreach (var connector in bodyPartConnectors)
         {
             if (!connector.IsEmpty())
                 connected++;
@@ -137,6 +145,7 @@ public class Body : MonoBehaviour
             formatter.Serialize(fs, ToSerializableList());
             formatter.Serialize(fs, position);
             formatter.Serialize(fs, rotation);
+            formatter.Serialize(fs, scale);
             Debug.Log("Statue saved to " + path);
         }
         catch (SerializationException e)
@@ -167,6 +176,8 @@ public class Body : MonoBehaviour
             bodyParts = (List<SerializableBodyPart>)formatter.Deserialize(fs);
             SerializableVector3 position = (SerializableVector3)formatter.Deserialize(fs);
             SerializableVector3 rotation = (SerializableVector3)formatter.Deserialize(fs);
+            scale = (float)formatter.Deserialize(fs);
+            SetScale(scale);
             FromSerializableList(bodyParts);
             transform.position = position;
             transform.eulerAngles = rotation;
@@ -186,7 +197,7 @@ public class Body : MonoBehaviour
     List<SerializableBodyPart> ToSerializableList()
     {
         List<SerializableBodyPart> bodyparts = new List<SerializableBodyPart>();
-        foreach (var connector in BodyPartConnectors)
+        foreach (var connector in bodyPartConnectors)
         {
             if (!connector.attachedPart || !connector.attachedPart.GetComponent<BodyPart>())
                 bodyparts.Add(null);
@@ -206,7 +217,7 @@ public class Body : MonoBehaviour
         {
             if (serializableBodyParts[i] != null)
             {
-                BodyPartConnector connector = BodyPartConnectors[i];
+                BodyPartConnector connector = bodyPartConnectors[i];
                 SerializableBodyPart serializableBodyPart = serializableBodyParts[i];
                 BodyPart bodyPart = serializableBodyPart.ToBodyPart();
                 connector.AttachTo(bodyPart);

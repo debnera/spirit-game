@@ -851,12 +851,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a020532fc3df5504c94d0ba0c5305a46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BodyPartConnectors:
+  bodyPartConnectors:
   - {fileID: 114699629068463542}
   - {fileID: 114504364923115330}
   - {fileID: 114291988120001284}
-  - {fileID: 114402875898475310}
   - {fileID: 114886477033632664}
+  - {fileID: 114402875898475310}
   attachedToPlayer: 1
 --- !u!114 &114143002465646360
 MonoBehaviour:

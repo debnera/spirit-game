@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
 	public Vector3 rotationOffset;
 	public float movementForce = 1;
 	public float movementTorque = 1;
+    private Body body;
 
 	
 
@@ -25,8 +26,8 @@ public class PlayerController : MonoBehaviour
 	{
 	    rb = GetComponent<Rigidbody>();
 	    rotation = transform.rotation.y;
-
-	}
+	    body = GetComponentInChildren<Body>();
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate ()
@@ -108,6 +109,12 @@ public class PlayerController : MonoBehaviour
         {
             body.HandleCollision(collision);
         }
+    }
+
+    public void SetScale(float scale)
+    {
+        if (body)
+            body.SetScale(scale);
     }
 
 }

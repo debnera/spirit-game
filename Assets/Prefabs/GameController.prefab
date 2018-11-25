@@ -122,8 +122,10 @@ MonoBehaviour:
   startUI: {fileID: 0}
   gameUI: {fileID: 0}
   endUI: {fileID: 0}
-  startScreenCameraFocusPoint: {fileID: 0}
-  startScreenCameraOffset: {x: 0, y: 0, z: 0}
+  startScreenCameraFocusPoint: {fileID: 1038931870295682}
+  startScreenCameraOffset: {x: 130, y: 30, z: 0}
   timerText: {fileID: 0}
   respawnDelay: 1
+  maxStatueScale: 3
+  statueScalingRate: 1
   currentState: 0

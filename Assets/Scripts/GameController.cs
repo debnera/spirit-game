@@ -29,6 +29,12 @@ public class GameController : MonoBehaviour
 
     public float respawnDelay = 1;
 
+    public float maxStatueScale = 3;
+    public float statueScalingRate = 1;
+
+    private float statueScale = 1;
+    private bool scalingStatue = false;
+
     private bool respawning = false;
     private string previousStatueFilename;
 
@@ -153,12 +159,19 @@ public class GameController : MonoBehaviour
 
     void PlayingUpdate()
     {
+        if (scalingStatue)
+        {
+            IncreaseScale();
+        }
         if (Input.GetKeyDown(KeyCode.R) && !respawning)
         {
             DisablePlayerControls();
+            statueScale = 1;
+            scalingStatue = true;
         }
         if (Input.GetKeyUp(KeyCode.R) && !respawning)
         {
+            scalingStatue = false;
             respawning = true;
             MakeStatue();
             SaveStatue();
@@ -197,6 +210,18 @@ public class GameController : MonoBehaviour
             SwitchUI(currentState);
             currentPlayer = null;
         }
+    }
+
+    void IncreaseScale()
+    {
+        if (statueScale > maxStatueScale) return;
+        statueScale += Time.deltaTime * statueScalingRate;
+        PlayerController controller = currentPlayer.GetComponent<PlayerController>();
+        if (controller)
+        {
+            controller.SetScale(statueScale);
+        }
+
     }
 
     public void SaveStatue()
