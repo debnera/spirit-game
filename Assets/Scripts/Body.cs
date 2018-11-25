@@ -14,11 +14,14 @@ public class Body : MonoBehaviour
     public bool attachedToPlayer;
     private float scale = 1;
     private Vector3 originalScale;
+    private Animator movementAnimator;
 
 	// Use this for initialization
     void Awake()
     {
         originalScale = transform.localScale;
+        movementAnimator = GetComponent<Animator>();
+        EnableMovementAnimation(false);
     }
 	
 	// Update is called once per frame
@@ -41,6 +44,18 @@ public class Body : MonoBehaviour
             }
         }
         return maxHeight;
+    }
+
+    public void EnableMovementAnimation(bool value)
+    {
+        if (!movementAnimator) return;
+        movementAnimator.enabled = value;
+    }
+
+    public void SetMovementAnimationSpeed(float speed)
+    {
+        if (!movementAnimator) return;
+        movementAnimator.speed = speed;
     }
 
     public bool IsAttachedToPlayer()

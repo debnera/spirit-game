@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 4984267643131234}
   - component: {fileID: 114011810799408388}
   - component: {fileID: 65214858241261840}
+  - component: {fileID: 95134098041450980}
   m_Layer: 8
   m_Name: torso
   m_TagString: Untagged
@@ -226,6 +227,7 @@ GameObject:
   - component: {fileID: 4080404470025356}
   - component: {fileID: 33985396819043318}
   - component: {fileID: 23183605805499670}
+  - component: {fileID: 95280394027135136}
   m_Layer: 8
   m_Name: Capsule
   m_TagString: Untagged
@@ -520,7 +522,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1614817384154874}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -656,7 +658,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1941085399172788}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -869,6 +871,40 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.45, y: 0.65, z: 0.33}
   m_Center: {x: 0, y: -0.05, z: 0}
+--- !u!95 &95134098041450980
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1046060134352000}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 368fd3583b0dd254e845e94b7ec7572b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!95 &95280394027135136
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1614817384154874}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0bcdb02ed23d84c41a0ce783201bd493, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114011810799408388
 MonoBehaviour:
   m_ObjectHideFlags: 1

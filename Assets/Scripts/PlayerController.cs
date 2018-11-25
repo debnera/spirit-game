@@ -54,25 +54,30 @@ public class PlayerController : MonoBehaviour
 		
 		var movementVector = new Vector3();
 
+	    SetMovementAnimationSpeed(0);
+        EnableMovementAnimation(true);
         if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
 	    {
 	        //rb.AddForce(Vector3.forward * walkingSpeed);
 	        //rb.velocity += cameraForward * walkingSpeed;
 		    movementVector = cameraForward * walkingSpeed;
-
+            SetMovementAnimationSpeed(1);
 	    }
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 	    {
 	        movementVector += -cameraRight * walkingSpeed;
-	    }
+	        SetMovementAnimationSpeed(1);
+        }
 	    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 	    {
 	        movementVector += cameraRight * walkingSpeed;
-	    }
+	        SetMovementAnimationSpeed(1);
+        }
 	    if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
 	    {
 	        movementVector += -cameraForward * walkingSpeed;
-	    }
+	        SetMovementAnimationSpeed(1);
+        }
 	    if (Input.GetKeyDown(KeyCode.Space) && IsOnGround())
 	    {
 	        movementVector += Vector3.up * jumpingSpeed;
@@ -95,6 +100,22 @@ public class PlayerController : MonoBehaviour
 			transform.rotation = Quaternion.Euler(newRot + rotationOffset);
 		}
 		
+    }
+
+    public void SetMovementAnimationSpeed(float value)
+    {
+        if (body)
+        {
+            body.SetMovementAnimationSpeed(value);
+        }
+    }
+
+    public void EnableMovementAnimation(bool value)
+    {
+        if (body)
+        {
+            body.EnableMovementAnimation(value);
+        }
     }
 
     public void SetCamera(Transform mainCamera)

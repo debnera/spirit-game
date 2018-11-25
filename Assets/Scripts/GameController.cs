@@ -290,6 +290,7 @@ public class GameController : MonoBehaviour
             PlayerController controller = currentPlayer.GetComponent<PlayerController>();
             if (controller)
             {
+                controller.EnableMovementAnimation(false);
                 controller.enabled = false;
             }
         }
