@@ -1290,32 +1290,42 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114089909138158362, guid: 90059b9dbc2f80d4e880843713b85082,
         type: 2}
-      propertyPath: PlayerCamera
+      propertyPath: rotatingCameraScript
+      value: 
+      objectReference: {fileID: 660572519}
+    - target: {fileID: 114089909138158362, guid: 90059b9dbc2f80d4e880843713b85082,
+        type: 2}
+      propertyPath: freeLookCam
       value: 
       objectReference: {fileID: 612492673}
     - target: {fileID: 114089909138158362, guid: 90059b9dbc2f80d4e880843713b85082,
         type: 2}
-      propertyPath: PlayerCameraTransform
+      propertyPath: mainCameraTransform
       value: 
       objectReference: {fileID: 1157376923}
     - target: {fileID: 114089909138158362, guid: 90059b9dbc2f80d4e880843713b85082,
         type: 2}
-      propertyPath: StartUI
+      propertyPath: startUI
       value: 
       objectReference: {fileID: 496171713}
     - target: {fileID: 114089909138158362, guid: 90059b9dbc2f80d4e880843713b85082,
         type: 2}
-      propertyPath: GameUI
+      propertyPath: gameUI
       value: 
       objectReference: {fileID: 416023798}
     - target: {fileID: 114089909138158362, guid: 90059b9dbc2f80d4e880843713b85082,
         type: 2}
-      propertyPath: EndUI
+      propertyPath: endUI
       value: 
       objectReference: {fileID: 656744412}
     - target: {fileID: 114089909138158362, guid: 90059b9dbc2f80d4e880843713b85082,
         type: 2}
-      propertyPath: TimerText
+      propertyPath: startRotateFocusPoint
+      value: 
+      objectReference: {fileID: 1711189882}
+    - target: {fileID: 114089909138158362, guid: 90059b9dbc2f80d4e880843713b85082,
+        type: 2}
+      propertyPath: timerText
       value: 
       objectReference: {fileID: 387461689}
     m_RemovedComponents: []
@@ -1737,6 +1747,12 @@ GameObject:
   m_PrefabParentObject: {fileID: 1573803833457384, guid: 441c27d1454cc674a871c32d03e49383,
     type: 2}
   m_PrefabInternal: {fileID: 559260467}
+--- !u!114 &660572519 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114278378094401830, guid: 8d0924bd6c78d10419967f615d1c87dd,
+    type: 2}
+  m_PrefabInternal: {fileID: 1460673393}
+  m_Script: {fileID: 11500000, guid: 034b6c73d90506046b3d351424aa23d3, type: 3}
 --- !u!4 &667554824 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4822468722643082, guid: d739fe4d2d6744ef387751ea69a21714,
@@ -2938,8 +2954,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1187898081}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: -0.00000016292068}
-  m_LocalPosition: {x: -190, y: -5.56, z: -3.5}
+  m_LocalRotation: {x: 0, y: 0.000000063325004, z: 0, w: 1}
+  m_LocalPosition: {x: -190, y: -5.56, z: -19}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3878,6 +3894,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1504677460}
   - component: {fileID: 1504677459}
+  - component: {fileID: 1504677461}
   m_Layer: 0
   m_Name: WaterReflectionMainCamera
   m_TagString: Untagged
@@ -3927,13 +3944,21 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1504677458}
-  m_LocalRotation: {x: -0.0014804163, y: 0.9923337, z: 0.123000845, w: 0.011936996}
-  m_LocalPosition: {x: -192.87206, y: -9.107706, z: 1.5734578}
+  m_LocalRotation: {x: 0.29348752, y: 0.50018096, z: 0.18502766, w: -0.7933782}
+  m_LocalPosition: {x: -184.3251, y: -10.503711, z: -4.7865543}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 33
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!45 &1504677461
+Skybox:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1504677458}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 0}
 --- !u!1001 &1522233551
 Prefab:
   m_ObjectHideFlags: 0

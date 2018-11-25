@@ -9,31 +9,35 @@ using UnityStandardAssets.Cameras;
 
 public class GameController : MonoBehaviour
 {
-    public FreeLookCam PlayerCamera;
-    public Transform PlayerCameraTransform;
-    public GameObject CurrentPlayer;
-    public GameObject PlayerPrefab;
-    public GameObject StatuePrefab;
-    public GameObject SpawnPoint;
+    public RotateAround rotatingCameraScript;
+    public FreeLookCam freeLookCam;
+    public Transform mainCameraTransform;
+    public GameObject currentPlayer;
+    public GameObject playerPrefab;
+    public GameObject statuePrefab;
+    public GameObject spawnPoint;
 
-    public GameObject StartUI;
-    public GameObject GameUI;
-    public GameObject EndUI;
+    public GameObject startUI;
+    public GameObject gameUI;
+    public GameObject endUI;
 
-    public Text TimerText;
+    public GameObject startRotateFocusPoint;
+    public Vector3 rotateOffset;
 
-    public float RespawnDelay = 1;
+    public Text timerText;
 
-    private bool Respawning = false;
-    private string PreviousStatueFilename;
+    public float respawnDelay = 1;
+
+    private bool respawning = false;
+    private string previousStatueFilename;
 
     
     private float timer;
-    private bool Playing;
+    private bool playing;
 
     public enum GameState { StartScreen, Playing, EndScreen };
 
-    public GameState CurrentState = GameState.StartScreen;
+    public GameState currentState = GameState.StartScreen;
 
     // Use this for initialization
     void Awake()
@@ -43,8 +47,8 @@ public class GameController : MonoBehaviour
 
 	void Start ()
 	{
-	    SwitchUI(CurrentState);
-	    if (CurrentState == GameState.Playing)
+	    SwitchUI(currentState);
+	    if (currentState == GameState.Playing)
 	    {
             StartGame();
 	    }
@@ -52,19 +56,48 @@ public class GameController : MonoBehaviour
 
     void SwitchUI(GameState state)
     {
-        StartUI.SetActive(false);
-        GameUI.SetActive(false);
-        EndUI.SetActive(false);
+        startUI.SetActive(false);
+        gameUI.SetActive(false);
+        endUI.SetActive(false);
         switch (state)
         {
             case GameState.StartScreen:
-                StartUI.SetActive(true);
+                if (rotatingCameraScript)
+                {
+                    rotatingCameraScript.enabled = true;
+                    rotatingCameraScript.target = startRotateFocusPoint;
+                    rotatingCameraScript.SetOffset(rotateOffset);
+                }
+
+                if (freeLookCam)
+                {
+                    freeLookCam.enabled = false;
+                }
+                startUI.SetActive(true);
                 break;
             case GameState.Playing:
-                GameUI.SetActive(true);
+                if (rotatingCameraScript)
+                {
+                    rotatingCameraScript.enabled = false;
+                }
+                if (freeLookCam)
+                {
+                    freeLookCam.enabled = true;
+                }
+                gameUI.SetActive(true);
                 break;
             case GameState.EndScreen:
-                GameUI.SetActive(true);
+                if (rotatingCameraScript)
+                {
+                    rotatingCameraScript.enabled = false;
+                    rotatingCameraScript.target = currentPlayer;
+                }
+
+                if (freeLookCam)
+                {
+                    freeLookCam.enabled = true;
+                }
+                gameUI.SetActive(true);
                 break;
         }
     }
@@ -72,19 +105,19 @@ public class GameController : MonoBehaviour
     void StartGame()
     {
         timer = 60;
-        Playing = true;
-        if (!CurrentPlayer)
+        playing = true;
+        if (!currentPlayer)
         {
-            CurrentPlayer = SpawnPlayer();
+            currentPlayer = SpawnPlayer();
         }
-        SetCameraTarget(CurrentPlayer);
-        CurrentPlayer.GetComponent<PlayerController>().SetCamera(PlayerCameraTransform);
+        SetCameraTarget(currentPlayer);
+        currentPlayer.GetComponent<PlayerController>().SetCamera(mainCameraTransform);
     }
 
 	
 	// Update is called once per frame
 	void Update () {
-	    switch (CurrentState)
+	    switch (currentState)
 	    {
 	        case GameState.StartScreen:
 	            StartScreenUpdate();
@@ -102,9 +135,9 @@ public class GameController : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            CurrentState = GameState.Playing;
+            currentState = GameState.Playing;
             StartGame();
-            SwitchUI(CurrentState);
+            SwitchUI(currentState);
         }
     }
 
@@ -112,23 +145,23 @@ public class GameController : MonoBehaviour
     {
         if (Input.anyKeyDown)
         {
-            CurrentState = GameState.StartScreen;
-            SwitchUI(CurrentState);
+            currentState = GameState.StartScreen;
+            SwitchUI(currentState);
         }
     }
 
     void PlayingUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.R) && !Respawning)
+        if (Input.GetKeyDown(KeyCode.R) && !respawning)
         {
             DisablePlayerControls();
         }
-        if (Input.GetKeyUp(KeyCode.R) && !Respawning)
+        if (Input.GetKeyUp(KeyCode.R) && !respawning)
         {
-            Respawning = true;
+            respawning = true;
             MakeStatue();
             SaveStatue();
-            Invoke("Respawn", RespawnDelay);
+            Invoke("Respawn", respawnDelay);
         }
 
         if (Input.GetKeyDown(KeyCode.K))
@@ -141,28 +174,28 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.L))
         {
             // Debug load
-            LoadStatue(GlobalSettings.GetStatueSavePath() + PreviousStatueFilename);
+            LoadStatue(GlobalSettings.GetStatueSavePath() + previousStatueFilename);
         }
 
-        if (TimerText && Playing)
+        if (timerText && playing)
         {
             timer -= Time.deltaTime;
             int intTime = (int) Math.Ceiling(timer);
             int minutes = intTime / 60;
             int seconds = intTime - (60*minutes);
-            TimerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
+            timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
     }
 
     public void SaveStatue()
     {
-        if (CurrentPlayer)
+        if (currentPlayer)
         {
-            var body = CurrentPlayer.GetComponentInChildren<Body>();
+            var body = currentPlayer.GetComponentInChildren<Body>();
             if (body)
             {
-                PreviousStatueFilename = GlobalSettings.GenerateStatueFilename();
-                body.Save(GlobalSettings.GetStatueSavePath(), PreviousStatueFilename);
+                previousStatueFilename = GlobalSettings.GenerateStatueFilename();
+                body.Save(GlobalSettings.GetStatueSavePath(), previousStatueFilename);
             }
             else
             {
@@ -186,7 +219,7 @@ public class GameController : MonoBehaviour
         //var pos = transform.position;
         //if (CurrentPlayer)
         //    pos = CurrentPlayer.transform.position;
-        var newStatue = Instantiate(StatuePrefab);
+        var newStatue = Instantiate(statuePrefab);
         //newStatue.transform.position = pos + new Vector3(0, 3, 0);
         var body = newStatue.GetComponentInChildren<Body>();
         body.Load(path);
@@ -196,9 +229,9 @@ public class GameController : MonoBehaviour
     public void MakeStatue()
     {
         // Freeze current player
-        if (CurrentPlayer)
+        if (currentPlayer)
         {
-            Body body = CurrentPlayer.GetComponentInChildren<Body>();
+            Body body = currentPlayer.GetComponentInChildren<Body>();
             if (body)
             {
                 body.FreezeToStatue();
@@ -208,16 +241,16 @@ public class GameController : MonoBehaviour
 
     public void Respawn()
     {
-        Respawning = false;
-        CurrentPlayer = SpawnPlayer();
-        SetCameraTarget(CurrentPlayer);
+        respawning = false;
+        currentPlayer = SpawnPlayer();
+        SetCameraTarget(currentPlayer);
     }
 
     public void DisablePlayerControls()
     {
-        if (CurrentPlayer)
+        if (currentPlayer)
         {
-            PlayerController controller = CurrentPlayer.GetComponent<PlayerController>();
+            PlayerController controller = currentPlayer.GetComponent<PlayerController>();
             if (controller)
             {
                 controller.enabled = false;
@@ -227,17 +260,17 @@ public class GameController : MonoBehaviour
 
     public GameObject SpawnPlayer()
     {
-        GameObject newPlayer = Instantiate(PlayerPrefab, SpawnPoint.transform.position, SpawnPoint.transform.rotation);
-        newPlayer.GetComponent<PlayerController>().SetCamera(PlayerCameraTransform);
+        GameObject newPlayer = Instantiate(playerPrefab, spawnPoint.transform.position, spawnPoint.transform.rotation);
+        newPlayer.GetComponent<PlayerController>().SetCamera(mainCameraTransform);
         return newPlayer;
     }
 
     public void SetCameraTarget(GameObject target)
     {
-        if (!PlayerCamera)
+        if (!freeLookCam)
         {
             Debug.LogError("GameController is missing reference to Player Camera!");
         }
-        PlayerCamera.SetTarget(target.transform);
+        freeLookCam.SetTarget(target.transform);
     }
 }

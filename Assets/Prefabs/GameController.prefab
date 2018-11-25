@@ -80,17 +80,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765d6afe1e4f57e46a570cc22ad95505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerCamera: {fileID: 0}
-  PlayerCameraTransform: {fileID: 0}
-  CurrentPlayer: {fileID: 0}
-  PlayerPrefab: {fileID: 1778873377918860, guid: 75bbb5b4f413a1f43b918b6b5bd0bdf3,
+  rotatingCameraScript: {fileID: 0}
+  freeLookCam: {fileID: 0}
+  mainCameraTransform: {fileID: 0}
+  currentPlayer: {fileID: 0}
+  playerPrefab: {fileID: 1778873377918860, guid: 75bbb5b4f413a1f43b918b6b5bd0bdf3,
     type: 2}
-  StatuePrefab: {fileID: 1138982408692352, guid: 18b05351a0a622144b51d24c31335366,
+  statuePrefab: {fileID: 1138982408692352, guid: 18b05351a0a622144b51d24c31335366,
     type: 2}
-  SpawnPoint: {fileID: 1491640443346594}
-  StartUI: {fileID: 0}
-  GameUI: {fileID: 0}
-  EndUI: {fileID: 0}
-  TimerText: {fileID: 0}
-  RespawnDelay: 1
-  CurrentState: 0
+  spawnPoint: {fileID: 1491640443346594}
+  startUI: {fileID: 0}
+  gameUI: {fileID: 0}
+  endUI: {fileID: 0}
+  startRotateFocusPoint: {fileID: 0}
+  rotateOffset: {x: 130, y: 30, z: 0}
+  timerText: {fileID: 0}
+  respawnDelay: 1
+  currentState: 0
