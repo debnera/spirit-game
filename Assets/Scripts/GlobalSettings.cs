@@ -45,6 +45,7 @@ public class GlobalSettings : MonoBehaviour {
                 files.Add(name);
         }
         files.Sort();
+        files.Reverse();
         return files;
     }
 }

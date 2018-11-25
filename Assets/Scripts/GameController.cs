@@ -38,6 +38,7 @@ public class GameController : MonoBehaviour
     private bool respawning = false;
     private string previousStatueFilename;
 
+    public int maxNumberOfLoadedStatues = 50;
     
     private float timer;
     private bool playing;
@@ -243,11 +244,16 @@ public class GameController : MonoBehaviour
 
     void LoadAllStatues()
     {
+        int numLoaded = 0;
         foreach (var name in GlobalSettings.GetAllStatueFilenames())
         {
             Debug.Log("Loading " + name);
             LoadStatue(name);
+            numLoaded++;
+            if (numLoaded > maxNumberOfLoadedStatues)
+                break;
         }
+        Debug.Log("Loaded " + numLoaded + " statues!");
             
     }
 

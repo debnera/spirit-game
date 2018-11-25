@@ -128,4 +128,5 @@ MonoBehaviour:
   respawnDelay: 1
   maxStatueScale: 3
   statueScalingRate: 1
+  maxNumberOfLoadedStatues: 50
   currentState: 0
