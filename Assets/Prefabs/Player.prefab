@@ -937,7 +937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 172eacf635fb4af4f93cd7700f9f745b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StatueBodyPrefab: {fileID: 0}
+  attachBodyPartClip: {fileID: 8300000, guid: 4fec9df5e8db5fd4c8cebb4c7553f6d3, type: 3}
+  jumpAudioClips:
+  - {fileID: 8300000, guid: e671784950b679244b9b6e432b913365, type: 3}
+  - {fileID: 8300000, guid: 411c18974f7eaeb428c73688e61f3cea, type: 3}
   WalkingMode: 1
   camera: {fileID: 0}
   walkingSpeed: 10

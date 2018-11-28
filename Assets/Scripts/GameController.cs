@@ -7,8 +7,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityStandardAssets.Cameras;
 
+[RequireComponent(typeof(AudioSource))]
 public class GameController : MonoBehaviour
 {
+    public AudioClip scaleStatueClip;
+    public AudioClip makeStatueClip;
+
     public float timeLimitSeconds = 60;
     public RotateAround rotatingCameraScript;
     public FreeLookCam freeLookCam;
@@ -47,10 +51,13 @@ public class GameController : MonoBehaviour
 
     public GameState currentState = GameState.StartScreen;
 
+    private AudioSource audioSource;
+
     // Use this for initialization
     void Awake()
     {
         LoadAllStatues();
+        audioSource = GetComponent<AudioSource>();
     }
 
 	void Start ()
@@ -169,14 +176,21 @@ public class GameController : MonoBehaviour
             DisablePlayerControls();
             statueScale = 1;
             scalingStatue = true;
+            audioSource.clip = scaleStatueClip;
+            audioSource.Play();
+
+
         }
         if (Input.GetKeyUp(KeyCode.R) && !respawning)
         {
             scalingStatue = false;
             respawning = true;
+            audioSource.clip = makeStatueClip;
+            audioSource.Play();
             MakeStatue();
             SaveStatue();
             Invoke("Respawn", respawnDelay);
+
         }
 
         if (Input.GetKeyDown(KeyCode.K))

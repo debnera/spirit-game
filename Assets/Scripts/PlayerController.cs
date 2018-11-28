@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(Rigidbody), typeof(AudioSource))]
 public class PlayerController : MonoBehaviour
 {
-    public GameObject StatueBodyPrefab;
+    public AudioClip attachBodyPartClip;
+    public AudioClip[] jumpAudioClips;
+
+    //public GameObject StatueBodyPrefab;
     public bool WalkingMode;
 	public Transform camera;
     public float walkingSpeed = 10;
@@ -22,12 +25,15 @@ public class PlayerController : MonoBehaviour
     private Vector3 feetColliderOffset;
     private CapsuleCollider feetCollider;
 
+    private AudioSource audioSource;
+
 
 
     // Use this for initialization
     void Start ()
-	{
-	    rb = GetComponent<Rigidbody>();
+    {
+        audioSource = FindObjectOfType<AudioSource>();
+        rb = GetComponent<Rigidbody>();
 	    rotation = transform.rotation.y;
 	    body = GetComponentInChildren<Body>();
 	    feetCollider = GetComponent<CapsuleCollider>();
@@ -80,7 +86,10 @@ public class PlayerController : MonoBehaviour
         }
 	    if (Input.GetKeyDown(KeyCode.Space) && IsOnGround())
 	    {
-	        movementVector += Vector3.up * jumpingSpeed;
+	        int index = Random.Range(0, jumpAudioClips.Length);
+	        audioSource.clip = jumpAudioClips[index];
+            audioSource.Play();
+            movementVector += Vector3.up * jumpingSpeed;
 	    }
 
 		if (WalkingMode)
@@ -146,6 +155,8 @@ public class PlayerController : MonoBehaviour
 
     public void OnBodyPartAttach()
     {
+        audioSource.clip = attachBodyPartClip;
+        audioSource.Play();
         SetColliderHeight(body.GetMaxLegHeight());
     }
 
