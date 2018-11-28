@@ -290,7 +290,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: ab7aafc170aad456dad01554c1722c52, type: 3}
+  - {fileID: 2100000, guid: d43dbca5a310bc64ab573505fe417d33, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -314,7 +314,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300000, guid: ab7aafc170aad456dad01554c1722c52, type: 3}
+  m_Mesh: {fileID: 4300000, guid: d43dbca5a310bc64ab573505fe417d33, type: 3}
   m_Bones:
   - {fileID: 4133998587541378}
   - {fileID: 4419062955517224}
