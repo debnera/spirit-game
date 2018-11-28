@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
     private CapsuleCollider feetCollider;
 
     private AudioSource audioSource;
-
+    private float height = 0;
 
 
     // Use this for initialization
@@ -134,9 +134,10 @@ public class PlayerController : MonoBehaviour
 
     bool IsOnGround()
     {
-        var hitMask = ~LayerMask.NameToLayer("Player"); // Ignore player
-        Debug.DrawRay(transform.position, Vector3.down * groundDetectionDistance, Color.green, 2f);
-        return Physics.Raycast(transform.position, Vector3.down, groundDetectionDistance, hitMask);
+        var hitMask = ~((1 << LayerMask.NameToLayer("Player")) | (1 <<LayerMask.NameToLayer("BodyPart"))) ; // Ignore player
+        var dist = groundDetectionDistance + height;
+        Debug.DrawRay(transform.position, Vector3.down * dist, Color.green, 2f);
+        return Physics.Raycast(transform.position, Vector3.down, dist, hitMask);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -160,8 +161,10 @@ public class PlayerController : MonoBehaviour
         SetColliderHeight(body.GetMaxLegHeight());
     }
 
-    public void SetColliderHeight(float height)
+    public void SetColliderHeight(float newHeight)
     {
+        height = newHeight;
+
         // Adjust the collider beneath the player to fit given height
         if (!feetCollider) return;
         float prevHeight = feetCollider.height;
