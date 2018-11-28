@@ -208,6 +208,11 @@ MonoBehaviour:
   startScreenCameraFocusPoint: {fileID: 1038931870295682}
   startScreenCameraOffset: {x: 130, y: 30, z: 0}
   timerText: {fileID: 0}
+  highScoreText: {fileID: 0}
+  playerHighScoreText: {fileID: 0}
+  currentHeightText: {fileID: 0}
+  highScoreGongratulationsText: {fileID: 0}
+  gongratulationsDisplayDuration: 3
   respawnDelay: 1
   maxStatueScale: 3
   statueScalingRate: 1

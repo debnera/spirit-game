@@ -30,6 +30,11 @@ public class GameController : MonoBehaviour
     public Vector3 startScreenCameraOffset;
 
     public Text timerText;
+    public Text highScoreText;
+    public Text playerHighScoreText;
+    public Text currentHeightText;
+    public Text highScoreGongratulationsText;
+    public float gongratulationsDisplayDuration = 3f;
 
     public float respawnDelay = 1;
 
@@ -52,12 +57,15 @@ public class GameController : MonoBehaviour
     public GameState currentState = GameState.StartScreen;
 
     private AudioSource audioSource;
+    private float highScore = 0;
+    private float playerHighScore = 0;
 
     // Use this for initialization
     void Awake()
     {
         LoadAllStatues();
         audioSource = GetComponent<AudioSource>();
+        highScoreGongratulationsText.enabled = false;
     }
 
 	void Start ()
@@ -189,6 +197,7 @@ public class GameController : MonoBehaviour
             audioSource.Play();
             MakeStatue();
             SaveStatue();
+            CheckHighScore();
             Invoke("Respawn", respawnDelay);
 
         }
@@ -216,6 +225,21 @@ public class GameController : MonoBehaviour
             timerText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
         }
 
+        if (highScoreText)
+        {
+            highScoreText.text = string.Format("{0:0.0} m", highScore);
+        }
+
+        if (playerHighScoreText)
+        {
+            playerHighScoreText.text = string.Format("{0:0.0} m", playerHighScore);
+        }
+
+        if (currentHeightText && currentPlayer)
+        {
+            currentHeightText.text = string.Format("{0:0.0} m", currentPlayer.transform.position.y);
+        }
+
         if (timer < 0)
         {
             MakeStatue();
@@ -224,6 +248,22 @@ public class GameController : MonoBehaviour
             currentState = GameState.EndScreen;
             SwitchUI(currentState);
             currentPlayer = null;
+        }
+    }
+
+    void CheckHighScore()
+    {
+        if (!currentPlayer) return;
+        float height = currentPlayer.transform.position.y;
+        if (height > highScore)
+        {
+            highScore = height;
+            StartCoroutine(FadeFloatingText(highScoreGongratulationsText, gongratulationsDisplayDuration));
+        }
+
+        if (height > playerHighScore)
+        {
+            playerHighScore = height;
         }
     }
 
@@ -281,6 +321,7 @@ public class GameController : MonoBehaviour
         var body = newStatue.GetComponentInChildren<Body>();
         body.Load(path);
         body.FreezeToStatue();
+        highScore = Mathf.Max(highScore, body.transform.position.y);
     }
 
     public void MakeStatue()
@@ -330,5 +371,18 @@ public class GameController : MonoBehaviour
             Debug.LogError("GameController is missing reference to Player Camera!");
         }
         freeLookCam.SetTarget(target.transform);
+    }
+
+    public IEnumerator FadeFloatingText(Text text, float duration)
+    {
+        text.enabled = true;
+        var color = text.color;
+        color.a = 1;
+        while (color.a > 0.0f)
+        {
+            color.a -= (Time.deltaTime / duration);
+            text.color = color;
+            yield return null;
+        }
     }
 }
