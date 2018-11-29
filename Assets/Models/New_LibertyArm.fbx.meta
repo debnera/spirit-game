@@ -30,6 +30,8 @@ ModelImporter:
     400020: transform7
     400022: transform8
     2100000: blinn2
+    2300000: pCylinder12
+    3300000: pCylinder12
     4300000: pCylinder12
     9500000: //RootNode
     13700000: pCylinder12

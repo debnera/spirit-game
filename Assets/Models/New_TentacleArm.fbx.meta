@@ -6,10 +6,30 @@ ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: joint11
+    100004: joint12
+    100006: joint13
+    100008: joint14
+    100010: joint15
+    100012: joint16
+    100014: joint17
+    100016: joint18
+    100018: "K\xE4det"
     400000: //RootNode
+    400002: joint11
+    400004: joint12
+    400006: joint13
+    400008: joint14
+    400010: joint15
+    400012: joint16
+    400014: joint17
+    400016: joint18
+    400018: "K\xE4det"
     2100000: Lonkero_tekstuuri
     2300000: //RootNode
+    2300002: "K\xE4det"
     3300000: //RootNode
+    3300002: "K\xE4det"
     4300000: "K\xE4det"
     9500000: //RootNode
   externalObjects: {}

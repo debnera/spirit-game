@@ -6,10 +6,20 @@ ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
     100000: //RootNode
+    100002: joint22
+    100004: joint23
+    100006: joint24
+    100008: "P\xE4\xE4"
     400000: //RootNode
+    400002: joint22
+    400004: joint23
+    400006: joint24
+    400008: "P\xE4\xE4"
     2100000: blinn8
     2300000: //RootNode
+    2300002: "P\xE4\xE4"
     3300000: //RootNode
+    3300002: "P\xE4\xE4"
     4300000: "P\xE4\xE4"
     9500000: //RootNode
   externalObjects: {}
