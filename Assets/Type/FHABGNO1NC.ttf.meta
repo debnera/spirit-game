@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 856e9050f7da541049d0e783b2f76ff7
+timeCreated: 1543448676
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: FHA Broken Gothic No1 NC
+  fontNames:
+  - FHA Broken Gothic No1 NC
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

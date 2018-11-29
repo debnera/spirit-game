@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 27f1d4f313b1f4a1ca0c1a7ad85e1be8
+timeCreated: 1543450510
+licenseType: Free
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Kon Tiki Aloha JF
+  fontNames:
+  - Kon Tiki Aloha JF
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
