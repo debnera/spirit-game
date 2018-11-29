@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using NUnit.Framework.Constraints;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityStandardAssets.Cameras;
 
@@ -170,14 +171,19 @@ public class GameController : MonoBehaviour
         {
             currentState = GameState.StartScreen;
             SwitchUI(currentState);
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
     void PlayingUpdate()
     {
-        if (scalingStatue)
+        if (scalingStatue && Input.GetKey(KeyCode.R))
         {
             IncreaseScale();
+        }
+        else
+        {
+            scalingStatue = false;
         }
         if (Input.GetKeyDown(KeyCode.R) && !respawning)
         {
