@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: a7bed68887a07e34394d4191b3081359, type: 3}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.65013623, g: 0.7230906, b: 0.77467895, a: 1}
+  m_IndirectSpecularColor: {r: 0.4299337, g: 0.6369788, b: 0.77361405, a: 1}
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -1538,6 +1538,16 @@ Prefab:
     - target: {fileID: 224122802539491542, guid: 441c27d1454cc674a871c32d03e49383,
         type: 2}
       propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82592267632764824, guid: 441c27d1454cc674a871c32d03e49383,
+        type: 2}
+      propertyPath: panLevelCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 82592267632764824, guid: 441c27d1454cc674a871c32d03e49383,
+        type: 2}
+      propertyPath: reverbZoneMixCustomCurve.m_RotationOrder
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -3824,8 +3834,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1504677458}
-  m_LocalRotation: {x: 0, y: 0.000000063325004, z: 0, w: 1}
-  m_LocalPosition: {x: -190, y: -5.56, z: -19}
+  m_LocalRotation: {x: 0.060266178, y: 0.020371621, z: 0.0012291996, w: -0.9979737}
+  m_LocalPosition: {x: -306.0971, y: -10.025375, z: 55.27476}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

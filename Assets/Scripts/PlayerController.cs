@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        audioSource = FindObjectOfType<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
 	    rotation = transform.rotation.y;
 	    body = GetComponentInChildren<Body>();
