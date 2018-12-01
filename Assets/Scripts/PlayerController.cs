@@ -66,36 +66,36 @@ public class PlayerController : MonoBehaviour
 	    {
 	        //rb.AddForce(Vector3.forward * walkingSpeed);
 	        //rb.velocity += cameraForward * walkingSpeed;
-		    movementVector = cameraForward * walkingSpeed;
+		    movementVector = cameraForward;
             SetMovementAnimationSpeed(1);
 	    }
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
 	    {
-	        movementVector += -cameraRight * walkingSpeed;
+	        movementVector += -cameraRight;
 	        SetMovementAnimationSpeed(1);
         }
 	    if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
 	    {
-	        movementVector += cameraRight * walkingSpeed;
+	        movementVector += cameraRight;
 	        SetMovementAnimationSpeed(1);
         }
 	    if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
 	    {
-	        movementVector += -cameraForward * walkingSpeed;
+	        movementVector += -cameraForward;
 	        SetMovementAnimationSpeed(1);
         }
-	    if (Input.GetKeyDown(KeyCode.Space) && IsOnGround())
-	    {
-	        int index = Random.Range(0, jumpAudioClips.Length);
-	        audioSource.clip = jumpAudioClips[index];
-            audioSource.Play();
-            movementVector += Vector3.up * jumpingSpeed;
-	    }
+	    
 
 		if (WalkingMode)
 		{
-			rb.velocity += movementVector;
-			var cameraRot = camera.transform.eulerAngles;
+            //rb.velocity += movementVector;
+		    if (movementVector != Vector3.zero)
+		    {
+		        movementVector = movementVector * (1 / movementVector.magnitude) * walkingSpeed;
+
+		    }
+		    rb.AddForce(movementVector * Time.fixedDeltaTime * movementForce);
+            var cameraRot = camera.transform.eulerAngles;
 			var newRot = new Vector3(0, cameraRot.y, 0);
 			transform.rotation = Quaternion.Euler(newRot + rotationOffset);
 		}
@@ -108,7 +108,18 @@ public class PlayerController : MonoBehaviour
 			newRot.y = cameraRot.y;
 			transform.rotation = Quaternion.Euler(newRot + rotationOffset);
 		}
-		
+
+	    if (Input.GetKeyDown(KeyCode.Space) && IsOnGround())
+	    {
+	        int index = Random.Range(0, jumpAudioClips.Length);
+	        audioSource.clip = jumpAudioClips[index];
+	        audioSource.Play();
+	        Vector3 velocity = rb.velocity;
+	        velocity.y = jumpingSpeed;
+	        rb.velocity = velocity;
+	        //movementVector += Vector3.up * jumpingSpeed;
+	    }
+
     }
 
     public void SetMovementAnimationSpeed(float value)
