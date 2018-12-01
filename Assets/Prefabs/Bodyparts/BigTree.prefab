@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 23546718535607828}
   - component: {fileID: 65709380312558056}
   - component: {fileID: 65451982381544910}
+  - component: {fileID: 65596166932823332}
   m_Layer: 0
   m_Name: Icosphere.006
   m_TagString: Untagged
@@ -68,7 +69,7 @@ Transform:
   m_GameObject: {fileID: 1489004698324504}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4083200119176592}
   m_Father: {fileID: 0}
@@ -140,8 +141,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.012420552, y: 0.02448918, z: 0.057455167}
-  m_Center: {x: -0.00081755966, y: -0.016262779, z: -0.038352698}
+  m_Size: {x: 0.012420573, y: 0.014228506, z: 0.046317328}
+  m_Center: {x: -0.00081755954, y: -0.015630081, z: -0.0439214}
+--- !u!65 &65596166932823332
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1766117602968840}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.012420573, y: 0.04146204, z: 0.010861503}
+  m_Center: {x: -0.0008175593, y: -0.012802468, z: -0.0152721815}
 --- !u!65 &65709380312558056
 BoxCollider:
   m_ObjectHideFlags: 1

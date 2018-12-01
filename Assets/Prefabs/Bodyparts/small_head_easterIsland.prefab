@@ -35,7 +35,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4911232273890210}
   - component: {fileID: 137026170553837200}
-  - component: {fileID: 65567072426779804}
+  - component: {fileID: 65292346034557676}
+  - component: {fileID: 65479287725470888}
   m_Layer: 0
   m_Name: pCube1
   m_TagString: Untagged
@@ -175,7 +176,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65567072426779804
+--- !u!65 &65292346034557676
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -185,8 +186,20 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.015637416, y: 0.011277495, z: 0.017767709}
-  m_Center: {x: 0.023807956, y: -0.041882742, z: 0.007822098}
+  m_Size: {x: 0.00760932, y: 0.0015515008, z: 0.0076948814}
+  m_Center: {x: 0.023692187, y: -0.037138205, z: 0.0074306047}
+--- !u!65 &65479287725470888
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1301934529752524}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.010331445, y: 0.009599678, z: 0.011197782}
+  m_Center: {x: 0.023838757, y: -0.04272177, z: 0.008415927}
 --- !u!95 &95334615557828264
 Animator:
   serializedVersion: 3
