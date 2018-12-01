@@ -43,7 +43,7 @@ public class BodyPartConnector : MonoBehaviour
 
     public void AttachTo(BodyPart bodyPart)
     {
-        IgnoreAllCollisions(bodyPart.gameObject);
+        
         //AdjustPosition(bodyPart);
         attachedPart = bodyPart.gameObject;
         bodyPart.SetAttached(true);
@@ -51,6 +51,7 @@ public class BodyPartConnector : MonoBehaviour
         bodyPart.transform.localEulerAngles = new Vector3(0, 0, 0);
         bodyPart.transform.localPosition = Vector3.zero;
         bodyPart.GetComponentInChildren<Rigidbody>().isKinematic = true;
+        IgnoreAllCollisions(bodyPart.gameObject);
         /*
         var hardPoint = bodyPart.GetHardPoint();
         Vector3 pos = bodyPart.transform.position - hardPoint.transform.position;
