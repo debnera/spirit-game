@@ -58,7 +58,7 @@ public class Body : MonoBehaviour
                 BodyPart bodyPart = bodyPartConnector.attachedPart.GetComponent<BodyPart>();
                 if (bodyPart)
                 {
-                    maxHeight = Mathf.Max(bodyPart.GetHeight());
+                    maxHeight = Mathf.Max(bodyPart.GetHeight(), maxHeight);
                 }
             }
         }
