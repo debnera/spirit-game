@@ -35,6 +35,20 @@ public class BodyPart : MonoBehaviour
             }
             height = maxVal * 2;
         }
+        else
+        {
+            MeshRenderer mesh2 = GetComponentInChildren<MeshRenderer>();
+            if (mesh2)
+            {
+                // Guess that the height is the length of the longest side of the bounding box
+                float maxVal = 0;
+                for (int i = 0; i < 3; i++)
+                {
+                    maxVal = Mathf.Max(maxVal, mesh2.bounds.extents[i]);
+                }
+                height = maxVal * 2;
+            }
+        }
     }
 
     public float GetHeight()
