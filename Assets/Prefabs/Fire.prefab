@@ -71,6 +71,7 @@ GameObject:
   - component: {fileID: 4591092956699624}
   - component: {fileID: 33218159280424910}
   - component: {fileID: 23651481554632818}
+  - component: {fileID: 64385852946820596}
   m_Layer: 0
   m_Name: Fireplace
   m_TagString: Untagged
@@ -87,7 +88,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4660193941255038}
   - component: {fileID: 54481041108671282}
-  - component: {fileID: 65650613506751596}
   m_Layer: 0
   m_Name: Fire
   m_TagString: Untagged
@@ -153,8 +153,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1861415071997356}
-  m_LocalRotation: {x: -0.7089894, y: -0.015750196, z: 0.016337702, w: 0.704854}
-  m_LocalPosition: {x: -303.09, y: 2.73, z: -81.95}
+  m_LocalRotation: {x: -0.67694753, y: -0.16699179, z: -0.16622497, w: 0.69729847}
+  m_LocalPosition: {x: -350.3608, y: 4.3117647, z: -63.760647}
   m_LocalScale: {x: 151.95891, y: 170.96986, z: 115.85362}
   m_Children:
   - {fileID: 4611199661795694}
@@ -163,7 +163,7 @@ Transform:
   - {fileID: 4278799058506528}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -92.621994, y: 82.67999, z: -82.632996}
+  m_LocalEulerAnglesHint: {x: -91.649994, y: 164.213, z: -191.472}
 --- !u!23 &23651481554632818
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -227,18 +227,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &65650613506751596
-BoxCollider:
+--- !u!64 &64385852946820596
+MeshCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1861415071997356}
+  m_GameObject: {fileID: 1757165466279052}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.0260807, y: 0.030126892, z: 0.020392329}
-  m_Center: {x: -0.0001781382, y: -0.0003667175, z: 0.009156557}
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_SkinWidth: 0.01
+  m_Mesh: {fileID: 4300002, guid: 6620c58c3c23b4741a5b527452a01d8a, type: 3}
 --- !u!108 &108542326992397644
 Light:
   m_ObjectHideFlags: 1
@@ -335,7 +337,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 13034861
+  randomSeed: -1072085839
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3708,7 +3710,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1993364123
+  randomSeed: 67781789
   InitialModule:
     serializedVersion: 3
     enabled: 1
