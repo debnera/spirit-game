@@ -15,6 +15,7 @@ public class Body : MonoBehaviour
     private float scale = 1;
     private Vector3 originalScale;
     private Animator movementAnimator;
+    private Dictionary<CharacterJoint, Vector3> connectorAnchorPositions = new Dictionary<CharacterJoint, Vector3>();
 
 	// Use this for initialization
     void Awake()
@@ -22,6 +23,24 @@ public class Body : MonoBehaviour
         originalScale = transform.localScale;
         movementAnimator = GetComponent<Animator>();
         EnableMovementAnimation(false);
+    }
+
+    void Start()
+    {
+        foreach (var connector in bodyPartConnectors)
+        {
+            CharacterJoint joint = connector.GetComponent<CharacterJoint>();
+            if (joint)
+                connectorAnchorPositions.Add(joint, joint.connectedAnchor);
+        }
+    }
+
+    void ScaleConnectorAnchorPositions(float scale)
+    {
+        foreach (KeyValuePair<CharacterJoint, Vector3> jointPosPair in connectorAnchorPositions)
+        {
+            jointPosPair.Key.connectedAnchor = jointPosPair.Value * scale;
+        }
     }
 	
 	// Update is called once per frame
@@ -67,6 +86,7 @@ public class Body : MonoBehaviour
     {
         scale = newScale;
         transform.localScale = originalScale * scale;
+        ScaleConnectorAnchorPositions(scale);
     }
 
     private void OnCollisionEnter(Collision collision)
