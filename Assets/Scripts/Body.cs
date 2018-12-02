@@ -48,6 +48,17 @@ public class Body : MonoBehaviour
 		
 	}
 
+    public int GetNumberOfConnectedLimbs()
+    {
+        int amount = 0;
+        foreach (var bodyPartConnector in bodyPartConnectors)
+        {
+            if (bodyPartConnector.attachedPart) amount++;
+        }
+
+        return amount;
+    }
+
     public float GetMaxLegHeight()
     {
         float maxHeight = 0;

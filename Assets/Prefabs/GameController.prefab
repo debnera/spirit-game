@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1038931870295682}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -274.6, y: 5, z: 14.4}
+  m_LocalPosition: {x: -274, y: 10, z: 7.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4343672357256712}
@@ -92,13 +92,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1491640443346594}
-  m_LocalRotation: {x: -0, y: -0.89824635, z: -0, w: 0.43949232}
-  m_LocalPosition: {x: -189.89, y: 5.51, z: 0.72}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -305.93, y: 20.7, z: 20.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4343672357256712}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: -127.857, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &82136314536271296
 AudioSource:
   m_ObjectHideFlags: 1
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scaleStatueClip: {fileID: 8300000, guid: 015c1ade6269c8c4ba90c22cff5bf0ec, type: 3}
   makeStatueClip: {fileID: 8300000, guid: 48711ff2767da184e8922861b7529dd9, type: 3}
-  timeLimitSeconds: 61
+  timeLimitSeconds: 60
   rotatingCameraScript: {fileID: 0}
   freeLookCam: {fileID: 0}
   mainCameraTransform: {fileID: 0}
@@ -206,7 +206,10 @@ MonoBehaviour:
   gameUI: {fileID: 0}
   endUI: {fileID: 0}
   startScreenCameraFocusPoint: {fileID: 1038931870295682}
-  startScreenCameraOffset: {x: 130, y: 30, z: 0}
+  startScreenCameraOffset: {x: 130, y: 20, z: 0}
+  collectMoreBodyPartsInfo: Collect at least {0:0} more body parts!
+  becomeStatueInfo: Hold E to become a statue!
+  playerGuideText: {fileID: 0}
   timerText: {fileID: 0}
   highScoreText: {fileID: 0}
   playerHighScoreText: {fileID: 0}
@@ -214,7 +217,8 @@ MonoBehaviour:
   highScoreGongratulationsText: {fileID: 0}
   gongratulationsDisplayDuration: 3
   respawnDelay: 1
-  maxStatueScale: 3
+  minBodyPartsToStatue: 3
+  maxStatueScale: 5
   statueScalingRate: 1
   maxNumberOfLoadedStatues: 50
   currentState: 0
