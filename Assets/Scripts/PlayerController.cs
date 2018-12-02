@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private Body body;
 
     private Vector3 feetColliderOffset;
-    private CapsuleCollider feetCollider;
+    private BoxCollider feetCollider;
 
     private AudioSource audioSource;
     private float height = 0;
@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 	    rotation = transform.rotation.y;
 	    body = GetComponentInChildren<Body>();
-	    feetCollider = GetComponent<CapsuleCollider>();
+	    feetCollider = GetComponent<BoxCollider>();
 	    if (feetCollider)
 	        feetColliderOffset = feetCollider.center;
         SetColliderHeight(0);
@@ -178,10 +178,12 @@ public class PlayerController : MonoBehaviour
 
         // Adjust the collider beneath the player to fit given height
         if (!feetCollider) return;
-        float prevHeight = feetCollider.height;
-        feetCollider.height = height;
+        float prevHeight = feetCollider.size.y;
+        var newSize = feetCollider.size;
+        newSize.y = height;
+        feetCollider.size = newSize;
         Vector3 newCenter = feetCollider.center;
-        newCenter.y = -feetCollider.height / 2 + feetColliderOffset.y;
+        newCenter.y = -height / 2 + feetColliderOffset.y;
         feetCollider.center = newCenter;
 
         // Adjust player position to avoid clipping the collider inside ground
@@ -190,6 +192,12 @@ public class PlayerController : MonoBehaviour
         newPos.y += heightDifference;
         transform.localPosition = newPos;
         Debug.Log("Adjusted player height to " + height.ToString());
+    }
+
+    public int GetNumberOfConnectedLimbs()
+    {
+        if (!body) return -1;
+        return body.GetNumberOfConnectedLimbs();
     }
 
 }
