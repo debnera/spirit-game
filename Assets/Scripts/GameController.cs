@@ -29,6 +29,10 @@ public class GameController : MonoBehaviour
     public GameObject startScreenCameraFocusPoint;
     public Vector3 startScreenCameraOffset;
 
+    public String collectMoreBodyPartsInfo = "Collect at least {0:0} more body parts!";
+    public String becomeStatueInfo = "Hold E to become a statue!";
+
+    public Text playerGuideText;
     public Text timerText;
     public Text highScoreText;
     public Text playerHighScoreText;
@@ -38,6 +42,7 @@ public class GameController : MonoBehaviour
 
     public float respawnDelay = 1;
 
+    public int minBodyPartsToStatue;
     public float maxStatueScale = 3;
     public float statueScalingRate = 1;
 
@@ -59,6 +64,9 @@ public class GameController : MonoBehaviour
     private AudioSource audioSource;
     private float highScore = 0;
     private float playerHighScore = 0;
+    private int minStateSwitchDelay = 2;
+    private bool canSwitchState;
+    private int prevRequiredLimbs = -1;
 
     // Use this for initialization
     void Awake()
@@ -77,8 +85,16 @@ public class GameController : MonoBehaviour
 	    }
 	}
 
+    void EnableStateSwitching()
+    {
+        
+        canSwitchState = true;
+    }
+
     void SwitchUI(GameState state)
     {
+        canSwitchState = false;  // Used to prevent the player accidentally starting the game / respawning at the end
+        Invoke("EnableStateSwitching", minStateSwitchDelay);
         startUI.SetActive(false);
         gameUI.SetActive(false);
         endUI.SetActive(false);
@@ -156,7 +172,7 @@ public class GameController : MonoBehaviour
 
     void StartScreenUpdate()
     {
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && canSwitchState)
         {
             currentState = GameState.Playing;
             StartGame();
@@ -166,7 +182,7 @@ public class GameController : MonoBehaviour
 
     void EndScreenUpdate()
     {
-        if (Input.anyKeyDown)
+        if (Input.anyKeyDown && canSwitchState)
         {
             currentState = GameState.StartScreen;
             SwitchUI(currentState);
@@ -176,7 +192,7 @@ public class GameController : MonoBehaviour
 
     void PlayingUpdate()
     {
-        if (scalingStatue && Input.GetKey(KeyCode.R))
+        if (scalingStatue && Input.GetKey(KeyCode.E))
         {
             IncreaseScale();
         }
@@ -184,17 +200,15 @@ public class GameController : MonoBehaviour
         {
             scalingStatue = false;
         }
-        if (Input.GetKeyDown(KeyCode.R) && !respawning)
+        if (Input.GetKeyDown(KeyCode.E) && !respawning && CanBecomeStatue())
         {
             DisablePlayerControls();
             statueScale = 1;
             scalingStatue = true;
             audioSource.clip = scaleStatueClip;
             audioSource.Play();
-
-
         }
-        if (Input.GetKeyUp(KeyCode.R) && !respawning)
+        if (Input.GetKeyUp(KeyCode.E) && !respawning)
         {
             scalingStatue = false;
             respawning = true;
@@ -204,14 +218,12 @@ public class GameController : MonoBehaviour
             SaveStatue();
             CheckHighScore();
             Invoke("Respawn", respawnDelay);
-
         }
 
         if (Input.GetKeyDown(KeyCode.K))
         {
             // Debug save
             SaveStatue();
-
         }
 
         if (Input.GetKeyDown(KeyCode.L))
@@ -223,7 +235,6 @@ public class GameController : MonoBehaviour
         timer -= Time.deltaTime;
         if (timerText && playing)
         {
-            
             int intTime = (int) Math.Ceiling(timer);
             int minutes = intTime / 60;
             int seconds = intTime - (60*minutes);
@@ -243,6 +254,27 @@ public class GameController : MonoBehaviour
         if (currentHeightText && currentPlayer)
         {
             currentHeightText.text = string.Format("{0:0.0} m", currentPlayer.transform.position.y);
+        }
+
+        if (playerGuideText)
+        {
+            int minFontSize = playerGuideText.fontSize;
+            int maxFontSize = Mathf.RoundToInt(minFontSize * 1.4f);
+            if (CanBecomeStatue())
+            {
+                
+                playerGuideText.text = becomeStatueInfo;
+            }
+            else
+            {
+                playerGuideText.text = string.Format(collectMoreBodyPartsInfo, GetLimbsRemainingToBecomeStatue());
+            }
+
+            if (prevRequiredLimbs != GetLimbsRemainingToBecomeStatue())
+            {
+                //StartCoroutine(HighlightText(playerGuideText, 2, minFontSize, maxFontSize));
+            }
+            prevRequiredLimbs = GetLimbsRemainingToBecomeStatue();
         }
 
         if (timer < 0)
@@ -282,6 +314,21 @@ public class GameController : MonoBehaviour
             controller.SetScale(statueScale);
         }
 
+    }
+
+    bool CanBecomeStatue()
+    {
+        PlayerController controller = currentPlayer.GetComponent<PlayerController>();
+        if (!controller) return false;
+        return GetLimbsRemainingToBecomeStatue() <= 0;
+    }
+
+    int GetLimbsRemainingToBecomeStatue()
+    {
+        // Returns the amount of Body Parts the player must still collect before becoming a statue
+        PlayerController controller = currentPlayer.GetComponent<PlayerController>();
+        if (!controller) return -1;
+        return minBodyPartsToStatue - controller.GetNumberOfConnectedLimbs();
     }
 
     public void SaveStatue()
@@ -389,5 +436,20 @@ public class GameController : MonoBehaviour
             text.color = color;
             yield return null;
         }
+    }
+
+    public IEnumerator HighlightText(Text text, float duration, int minFontSize, int maxFontSize)
+    {
+        text.enabled = true;
+        text.fontSize = maxFontSize;
+        float size = text.fontSize;
+        float diff = maxFontSize - minFontSize;
+        while (size > minFontSize)
+        {
+            size -= (Time.deltaTime / duration) * diff;
+            text.fontSize = Mathf.FloorToInt(size);
+            yield return null;
+        }
+        
     }
 }
