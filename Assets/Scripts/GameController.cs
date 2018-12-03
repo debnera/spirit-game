@@ -208,7 +208,7 @@ public class GameController : MonoBehaviour
             audioSource.clip = scaleStatueClip;
             audioSource.Play();
         }
-        if (Input.GetKeyUp(KeyCode.E) && !respawning)
+        if (Input.GetKeyUp(KeyCode.E) && !respawning && CanBecomeStatue())
         {
             scalingStatue = false;
             respawning = true;
