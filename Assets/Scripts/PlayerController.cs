@@ -45,8 +45,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        var vel = rb.velocity;
-        rb.velocity = new Vector3(0, vel.y, 0);
+        //var vel = rb.velocity;
+        //rb.velocity = new Vector3(0, vel.y, 0);
 
         if (!camera)
         {
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         var cameraForward = Vector3.Scale(camera.forward, new Vector3(1, 0, 1)).normalized;
         var cameraRight = Vector3.Scale(camera.right, new Vector3(1, 0, 1)).normalized;
 
-        var movementVector = new Vector3();
+        var movementVector = Vector3.zero;
 
         SetMovementAnimationSpeed(0);
         EnableMovementAnimation(true);
@@ -66,47 +66,64 @@ public class PlayerController : MonoBehaviour
         {
             //rb.AddForce(Vector3.forward * walkingSpeed);
             //rb.velocity += cameraForward * walkingSpeed;
-            movementVector = cameraForward * walkingSpeed;
+            movementVector = cameraForward;
             SetMovementAnimationSpeed(1);
         }
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            movementVector += -cameraRight * walkingSpeed;
+            movementVector += -cameraRight;
             SetMovementAnimationSpeed(1);
         }
         if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
-            movementVector += cameraRight * walkingSpeed;
+            movementVector += cameraRight;
             SetMovementAnimationSpeed(1);
         }
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            movementVector += -cameraForward * walkingSpeed;
+            movementVector += -cameraForward;
             SetMovementAnimationSpeed(1);
         }
+
+        var magnitude = movementVector.magnitude;
+        if (magnitude > 0)
+        {
+            movementVector /= magnitude;
+            movementVector *= walkingSpeed;
+        }
+        //rb.velocity += movementVector;
+        rb.AddForce(movementVector * movementForce);
+        var cameraRot = camera.transform.eulerAngles;
+        var newRot = new Vector3(0, cameraRot.y, 0);
+        transform.rotation = Quaternion.Euler(newRot + rotationOffset);
+
+        Debug.DrawRay(camera.position, cameraForward * 100, Color.green, 0.1f);
+        Debug.DrawRay(transform.position, cameraForward * 100, Color.green, 0.1f);
+        Debug.DrawRay(transform.position, movementVector * 100, Color.green, 0.1f);
+        var vel = rb.velocity;
+        var temp_y = vel.y;
+        vel.y = 0;
+        var magnitude2 = vel.magnitude;
+        if (magnitude2 > walkingSpeed)
+        {
+            vel = vel / magnitude2 * walkingSpeed;
+        }
+
+        vel.y = temp_y;
+        rb.velocity = vel;
+        if (vel.magnitude < 0.2f)
+        {
+            rb.velocity = Vector3.zero;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && IsOnGround())
         {
             int index = Random.Range(0, jumpAudioClips.Length);
             audioSource.clip = jumpAudioClips[index];
             audioSource.Play();
-            movementVector += Vector3.up * jumpingSpeed;
-        }
-
-        if (WalkingMode)
-        {
-            rb.velocity += movementVector;
-            var cameraRot = camera.transform.eulerAngles;
-            var newRot = new Vector3(0, cameraRot.y, 0);
-            transform.rotation = Quaternion.Euler(newRot + rotationOffset);
-        }
-        else
-        {
-            rb.AddForce(movementVector * Time.fixedDeltaTime * movementForce);
-            rb.AddTorque(movementVector * Time.fixedDeltaTime * movementTorque);
-            var cameraRot = camera.transform.eulerAngles;
-            var newRot = transform.eulerAngles;
-            newRot.y = cameraRot.y;
-            transform.rotation = Quaternion.Euler(newRot + rotationOffset);
+            //var vel = rb.velocity;
+            vel.y = jumpingSpeed;
+            rb.velocity = vel;
         }
 
     }

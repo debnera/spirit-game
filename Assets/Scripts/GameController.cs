@@ -406,6 +406,12 @@ public class GameController : MonoBehaviour
                 controller.EnableMovementAnimation(false);
                 controller.enabled = false;
             }
+
+            Rigidbody rb = currentPlayer.GetComponent<Rigidbody>();
+            if (rb)
+            {
+                rb.constraints = RigidbodyConstraints.None;
+            }
         }
     }
 

@@ -50,7 +50,9 @@ public class BodyPartConnector : MonoBehaviour
         bodyPart.gameObject.transform.parent = transform;
         bodyPart.transform.localEulerAngles = new Vector3(0, 0, 0);
         bodyPart.transform.localPosition = Vector3.zero;
-        bodyPart.GetComponentInChildren<Rigidbody>().isKinematic = true;
+        //bodyPart.gameObject.AddComponent<HingeJoint>().connectedBody = this.GetComponent<Rigidbody>();
+        var rbody = bodyPart.GetComponentInChildren<Rigidbody>();
+        if (rbody) Destroy(rbody);
         IgnoreAllCollisions(bodyPart.gameObject);
         /*
         var hardPoint = bodyPart.GetHardPoint();
