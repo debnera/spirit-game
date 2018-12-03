@@ -14,6 +14,8 @@ public class PlayerController : MonoBehaviour
     public Transform camera;
     public float walkingSpeed = 10;
     public float jumpingSpeed = 10;
+    public float heightBasedExtraSpeed = 1;
+    public float heightBasedExtraJumpHeight = 1;
     public float groundDetectionDistance = 1f;
     private float rotation;
     private Rigidbody rb;
@@ -89,7 +91,7 @@ public class PlayerController : MonoBehaviour
         if (magnitude > 0)
         {
             movementVector /= magnitude;
-            movementVector *= walkingSpeed;
+            movementVector *= (walkingSpeed + height * heightBasedExtraSpeed);
         }
         //rb.velocity += movementVector;
         rb.AddForce(movementVector * movementForce);
@@ -122,7 +124,7 @@ public class PlayerController : MonoBehaviour
             audioSource.clip = jumpAudioClips[index];
             audioSource.Play();
             //var vel = rb.velocity;
-            vel.y = jumpingSpeed;
+            vel.y = jumpingSpeed + height * heightBasedExtraJumpHeight;
             rb.velocity = vel;
         }
 

@@ -1037,8 +1037,10 @@ MonoBehaviour:
   camera: {fileID: 0}
   walkingSpeed: 3
   jumpingSpeed: 30
+  heightBasedExtraSpeed: 1
+  heightBasedExtraJumpHeight: 5
   groundDetectionDistance: 1
-  rotationOffset: {x: 0, y: 0, z: 0}
+  rotationOffset: {x: 0, y: 6.6, z: 0}
   movementForce: 10000
   movementTorque: 10
 --- !u!114 &114152527213166694
