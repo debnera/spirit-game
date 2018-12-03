@@ -46,7 +46,7 @@ public class GameController : MonoBehaviour
     public float maxStatueScale = 3;
     public float statueScalingRate = 1;
 
-    private float statueScale = 1;
+    public float statueScale = 1;
     private bool scalingStatue = false;
 
     private bool respawning = false;
