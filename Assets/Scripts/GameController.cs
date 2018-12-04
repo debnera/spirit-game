@@ -311,7 +311,11 @@ public class GameController : MonoBehaviour
 
     void IncreaseScale()
     {
-        if (statueScale > maxStatueScale) return;
+        if (statueScale > maxStatueScale)
+        {
+            audioSource.Stop();
+            return;
+        }
         statueScale += Time.deltaTime * statueScalingRate;
         PlayerController controller = currentPlayer.GetComponent<PlayerController>();
         if (controller)
