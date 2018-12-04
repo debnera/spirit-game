@@ -93,6 +93,7 @@ public class GameController : MonoBehaviour
 
     void SwitchUI(GameState state)
     {
+        audioSource.Stop();
         canSwitchState = false;  // Used to prevent the player accidentally starting the game / respawning at the end
         Invoke("EnableStateSwitching", minStateSwitchDelay);
         startUI.SetActive(false);
