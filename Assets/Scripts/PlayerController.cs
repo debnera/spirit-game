@@ -156,7 +156,25 @@ public class PlayerController : MonoBehaviour
         var hitMask = ~((1 << LayerMask.NameToLayer("Player")) | (1 << LayerMask.NameToLayer("BodyPart"))); // Ignore player
         var dist = groundDetectionDistance + height;
         Debug.DrawRay(transform.position, Vector3.down * dist, Color.green, 2f);
-        return Physics.Raycast(transform.position, Vector3.down, dist, hitMask);
+        var result = Physics.Raycast(transform.position, Vector3.down, dist, hitMask);
+
+        var localpos = feetCollider.transform.localPosition + feetCollider.center;
+        localpos.y -= feetCollider.height/2;
+        var pos = localpos;//transform.TransformPoint(localpos);
+        var radius = feetCollider.radius*2;
+        //var radius = 50;
+        var result2 = Physics.OverlapSphere(pos, radius, hitMask);
+        Debug.Log(pos);
+        Debug.Log(localpos);
+        Debug.DrawRay(pos, Vector3.down * radius, Color.red, 20f);
+        Debug.DrawRay(pos, Vector3.left * radius, Color.red, 20f);
+        Debug.DrawRay(pos, Vector3.right * radius, Color.red, 20f);
+        Debug.DrawRay(pos, Vector3.forward * radius, Color.red, 20f);
+        //bool ok = result;
+        bool ok = false;
+        bool ok2 = result2.Length > 0;
+        
+        return ok || ok2;
     }
 
     private void OnCollisionEnter(Collision collision)
