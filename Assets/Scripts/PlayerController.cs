@@ -99,9 +99,9 @@ public class PlayerController : MonoBehaviour
         var newRot = new Vector3(0, cameraRot.y, 0);
         transform.rotation = Quaternion.Euler(newRot + rotationOffset);
 
-        Debug.DrawRay(camera.position, cameraForward * 100, Color.green, 0.1f);
-        Debug.DrawRay(transform.position, cameraForward * 100, Color.green, 0.1f);
-        Debug.DrawRay(transform.position, movementVector * 100, Color.green, 0.1f);
+        //Debug.DrawRay(camera.position, cameraForward * 100, Color.green, 0.1f);
+        //Debug.DrawRay(transform.position, cameraForward * 100, Color.green, 0.1f);
+        //Debug.DrawRay(transform.position, movementVector * 100, Color.green, 0.1f);
         var vel = rb.velocity;
         var temp_y = vel.y;
         vel.y = 0;
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
     {
         var hitMask = ~((1 << LayerMask.NameToLayer("Player")) | (1 << LayerMask.NameToLayer("BodyPart"))); // Ignore player
         var dist = groundDetectionDistance + height;
-        Debug.DrawRay(transform.position, Vector3.down * dist, Color.green, 2f);
+        //Debug.DrawRay(transform.position, Vector3.down * dist, Color.green, 2f);
         var result = Physics.Raycast(transform.position, Vector3.down, dist, hitMask);
 
         var localpos = feetCollider.transform.localPosition + feetCollider.center;
@@ -164,12 +164,12 @@ public class PlayerController : MonoBehaviour
         var radius = feetCollider.radius*2;
         //var radius = 50;
         var result2 = Physics.OverlapSphere(pos, radius, hitMask);
-        Debug.Log(pos);
-        Debug.Log(localpos);
-        Debug.DrawRay(pos, Vector3.down * radius, Color.red, 20f);
-        Debug.DrawRay(pos, Vector3.left * radius, Color.red, 20f);
-        Debug.DrawRay(pos, Vector3.right * radius, Color.red, 20f);
-        Debug.DrawRay(pos, Vector3.forward * radius, Color.red, 20f);
+        //Debug.Log(pos);
+        //Debug.Log(localpos);
+        //Debug.DrawRay(pos, Vector3.down * radius, Color.red, 20f);
+        //Debug.DrawRay(pos, Vector3.left * radius, Color.red, 20f);
+        //Debug.DrawRay(pos, Vector3.right * radius, Color.red, 20f);
+        //Debug.DrawRay(pos, Vector3.forward * radius, Color.red, 20f);
         //bool ok = result;
         bool ok = false;
         bool ok2 = result2.Length > 0;
