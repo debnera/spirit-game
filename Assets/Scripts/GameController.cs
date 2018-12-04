@@ -186,7 +186,7 @@ public class GameController : MonoBehaviour
         {
             currentState = GameState.StartScreen;
             SwitchUI(currentState);
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 
@@ -199,6 +199,11 @@ public class GameController : MonoBehaviour
         else
         {
             scalingStatue = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
         if (Input.GetKeyDown(KeyCode.E) && !respawning && CanBecomeStatue())
         {
