@@ -894,7 +894,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -950,7 +950,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -1033,6 +1033,12 @@ MonoBehaviour:
   jumpAudioClips:
   - {fileID: 8300000, guid: e671784950b679244b9b6e432b913365, type: 3}
   - {fileID: 8300000, guid: 411c18974f7eaeb428c73688e61f3cea, type: 3}
+  - {fileID: 8300000, guid: 68029e51f3a9c4ee49f1ed695fef309e, type: 3}
+  - {fileID: 8300000, guid: 387a862bf750d4145b96bc639f733cc3, type: 3}
+  - {fileID: 8300000, guid: 036c2f1cae5804139a2b93d9dcaa69c0, type: 3}
+  - {fileID: 8300000, guid: 0d078fb8acca54695870f4264dfd4f43, type: 3}
+  - {fileID: 8300000, guid: e5248729d9d6b4965ae84dc16535bc9b, type: 3}
+  - {fileID: 8300000, guid: c57ca3be8d51f49d78cb12567bf39178, type: 3}
   WalkingMode: 1
   camera: {fileID: 0}
   walkingSpeed: 3

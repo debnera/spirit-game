@@ -110,7 +110,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.35
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -166,7 +166,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 765d6afe1e4f57e46a570cc22ad95505, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scaleStatueClip: {fileID: 8300000, guid: 015c1ade6269c8c4ba90c22cff5bf0ec, type: 3}
+  scaleStatueClip: {fileID: 8300000, guid: 2d076f67b0ddb43ec8fa559b941fb621, type: 3}
   makeStatueClip: {fileID: 8300000, guid: 48711ff2767da184e8922861b7529dd9, type: 3}
   timeLimitSeconds: 60
   rotatingCameraScript: {fileID: 0}
@@ -220,5 +220,6 @@ MonoBehaviour:
   minBodyPartsToStatue: 3
   maxStatueScale: 5
   statueScalingRate: 1
+  statueScale: 1
   maxNumberOfLoadedStatues: 50
   currentState: 0
