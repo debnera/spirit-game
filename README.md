@@ -7,6 +7,7 @@ The assignment was to create a game that lasts for one minute.
 Pää Kolmantena Jalkana is a game that takes place on a faraway island in the ocean. 
 You have one minute to collect your limbs, build your body, and transform into a statue for others to find.
 
+[**Watch the trailer here!**](https://www.youtube.com/watch?v=m_LlzLTYaQM)
 
 [**Play it here!**](https://debnera.github.io/spirit-game/Build/index.html)   
 
